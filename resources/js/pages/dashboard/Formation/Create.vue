@@ -22,6 +22,7 @@ const form = useForm({
     end_date: '',
     user_id: '',
     image: null, // initialiser à null
+    logo_formation: null, // initialiser à null
 });
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -99,7 +100,7 @@ function submitForm() {
                         <label for="roles" class="block font-medium capitalize"> Formateur </label>
                         <Select v-model="form.user_id">
                             <SelectTrigger class="w-full">
-                                <SelectValue placeholder="Sélectionnez un rôle" />
+                                <SelectValue placeholder="Sélectionnez un formateur" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem v-for="user in formateurs" :key="user.id" :value="user.id">
@@ -112,9 +113,16 @@ function submitForm() {
 
                     <!-- Image -->
                     <div class="space-y-2">
-                        <label for="image" class="block font-medium capitalize"> Mot de passe </label>
+                        <label for="image" class="block font-medium capitalize"> Image Formation </label>
                         <Input type="file" accept="image/*" @change="(e) => (form.image = e.target.files[0])" />
                         <span v-if="form.errors.image" class="text-sm text-red-600"> {{ form.errors.image }} </span>
+                    </div>
+
+                    <!-- Logo de la Formation -->
+                    <div class="space-y-2">
+                        <label for="logo_formation" class="block font-medium capitalize"> Logo de la formation </label>
+                        <Input type="file" accept="image/*" @change="(e) => (form.image = e.target.files[0])" />
+                        <span v-if="form.errors.logo_formation" class="text-sm text-red-600"> {{ form.errors.logo_formation }} </span>
                     </div>
                 </div>
 

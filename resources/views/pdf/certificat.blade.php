@@ -40,9 +40,10 @@
         }
 
         .header img {
-            height: 150px;            /* taille augmentée mais contrôlée */
+            height: 150px;
+            /* taille augmentée mais contrôlée */
             object-fit: contain;
-            position: absolute; 
+            position: absolute;
         }
 
         .header .left {
@@ -106,14 +107,18 @@
             padding: 10px 0;
             margin: 5px 0;
         }
+
+        .hidden {
+            visibility: hidden;
+        }
     </style>
 </head>
 
 <body>
     <div class="border">
         <div class="header">
-            <img src="{{ public_path('asset/img/forma.png') }}" class="left">
-            <img src="{{ public_path('asset/img/logo.png') }}" class="right">
+            <img src="{{ public_path('asset/img/logo_formaplus.png') }}" class="left">
+            <img src="{{ public_path('asset/img/hat.png') }}" class="right">
         </div>
 
         <hr>
@@ -133,7 +138,8 @@
         <p>les droits et prérogatives qui y sont attachés.</p>
 
         <div class="footer">
-            <p>+223 20 24 26 72 | contact@doucsoft.tech | www.doucsoft.tech</p>
+            <p>+223 20 24 26 72 <span class="hidden">$$$$$$$$$$$$$$$$$$</span> contact@doucsoft.tech <span
+                    class="hidden">$$$$$$$$$$$$$$$$$$</span> www.doucsoft.tech</p>
             <p>Sotuba ACI, Près de Japan Motors, Route de Koulikoro, Imm Wafa Simpara</p>
         </div>
     </div>

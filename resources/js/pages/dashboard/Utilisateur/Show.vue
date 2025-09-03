@@ -15,7 +15,7 @@ interface User {
 }
 
 const props = defineProps<{
-  user: User;
+  users: User;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -27,6 +27,10 @@ const breadcrumbs: BreadcrumbItem[] = [
         title: 'Utilisateur',
         href: index().url,
     },
+    {
+        title: 'Détails Utilisateur',
+        href: '#',
+    },
 
 ];
 </script>
@@ -35,25 +39,25 @@ const breadcrumbs: BreadcrumbItem[] = [
   <Head title="Détails Utilisateur" />
 
   <AppLayout :breadcrumbs="breadcrumbs">
-    <div class="p-6 bg-white rounded-lg shadow-md space-y-4">
+    <div class="p-6 rounded-lg space-y-4">
       <h1 class="text-2xl font-bold mb-4">Détails de l'utilisateur</h1>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <p class="font-semibold">Nom :</p>
-          <p class="capitalize">{{ props.user.name }}</p>
+          <p class="capitalize">{{ props.users.name }}</p>
         </div>
         <div>
           <p class="font-semibold">Nom d'utilisateur :</p>
-          <p class="capitalize">{{ props.user.username }}</p>
+          <p class="capitalize">{{ props.users.username }}</p>
         </div>
         <div>
           <p class="font-semibold">Email :</p>
-          <p class="lowercase">{{ props.user.email }}</p>
+          <p class="lowercase">{{ props.users.email }}</p>
         </div>
         <div>
           <p class="font-semibold">ID :</p>
-          <p>{{ props.user.id }}</p>
+          <p>{{ props.users.id }}</p>
         </div>
       </div>
 

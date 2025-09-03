@@ -27,7 +27,7 @@ createInertiaApp({
     },
 
     progress: {
-        color: '#4B5563', // barre de chargement Inertia
+        color: '#3333ff', // barre de chargement Inertia
     },
 });
 

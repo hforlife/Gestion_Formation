@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('image');
+            $table->string('image')->nullable();
+            $table->string('logo_formation')->nullable();
             $table->date('start_date');
             $table->date('end_date');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');

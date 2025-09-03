@@ -14,6 +14,7 @@ class Formation extends Model
         'end_date',
         'user_id',
         'image',
+        'logo_formation',
     ];
 
     // Relation avec le modèle User (formateur)

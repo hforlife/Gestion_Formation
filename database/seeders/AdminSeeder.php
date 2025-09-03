@@ -16,6 +16,7 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $AdminRole = Role::firstOrCreate(['name' => 'admin']);
+        $FormateurRole = Role::firstOrCreate(['name' => 'formateur']);
         $AdminRole->syncPermissions(Permission::all());
 
         $admins = [

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
-import { create, index } from '@/routes/user';
+import { create, index } from '@/routes/role';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import type { ColumnDef, ColumnFiltersState, ExpandedState, SortingState, VisibilityState } from '@tanstack/vue-table';
@@ -26,28 +26,16 @@ import { valueUpdater } from '@/lib/utils';
 import { Link } from '@inertiajs/vue3';
 import { h, ref } from 'vue';
 
-export interface User {
+export interface Role {
     id: number;
     name: string;
-    username: string;
-    email: string;
-    // status: 'pending' | 'processing' | 'success' | 'failed';
 }
 
 const props = defineProps<{
-    users: User[];
+    roles: Role[];
 }>();
 
-// const data = shallowRef<user[]>([
-//     {
-//         id: props.users.id,
-//         name: props.users.name,
-//         username: props.users.username,
-//         email: props.users.email,
-//     },
-// ]);
-
-const columns: ColumnDef<User>[] = [
+const columns: ColumnDef<Role>[] = [
     {
         id: 'select',
         header: ({ table }) =>
@@ -67,53 +55,43 @@ const columns: ColumnDef<User>[] = [
     },
     {
         accessorKey: 'name',
-        header: 'Nom',
+        header: 'Role',
         cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('name')),
     },
     {
-        accessorKey: 'username',
-        header: "Nom d'utilisateur",
-        cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('username')),
-    },
-    {
-        accessorKey: 'email',
-        header: ({ column }) => {
-            return h(
-                Button,
-                {
-                    variant: 'ghost',
-                    onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-                },
-                () => ['Email', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })],
-            );
-        },
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('email')),
+        accessorKey: 'permissions',
+        header: "Permissions",
+        cell: ({ row }) => h('div', { class: 'capitalize' }, row.original.permissions.length),
     },
     {
         id: 'actions',
         enableHiding: false,
         cell: ({ row }) => {
-            const user = row.original;
+            const role = row.original;
             return h(DropdownAction, {
-                id: user.id,
-                entityName: 'Utilisateur',
+                id: role.id,
+                entityName: 'Role',
                 routes: {
-                    show: '/user', // /user/{id}
-                    edit: '/user', // /user/{id}/edit
-                    delete: '/user', // /user/{id}
-                    index: '/user', // /user
+                    show: '/role', // /user/{id}
+                    edit: '/role', // /user/{id}/edit
+                    delete: '/role', // /user/{id}
+                    index: '/role', // /user
                 },
             });
         },
     },
 ];
 
+// const getPermissionCount = (role) => {
+//     return role.permissions ? role.permissions.length : 0;
+// };
+
 const sorting = ref<SortingState>([]);
 const columnFilters = ref<ColumnFiltersState>([]);
 const columnVisibility = ref<VisibilityState>({});
 const rowSelection = ref({});
 const expanded = ref<ExpandedState>({});
-const tableData = ref<User[]>(props.users);
+const tableData = ref<Role[]>(props.roles);
 
 const table = useVueTable({
     data: tableData.value,
@@ -147,43 +125,35 @@ const table = useVueTable({
     },
 });
 
-// const statuses: user['name'][] = 'name';
-// function randomize() {
-//     data.value = data.value.map((item) => ({
-//         ...item,
-//         status: statuses[Math.floor(Math.random() * statuses.length)],
-//     }));
-// }
-
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Tableau de bord',
         href: dashboard().url,
     },
     {
-        title: 'Utilisateur',
+        title: 'Role',
         href: index().url,
     },
 ];
 </script>
 
 <template>
-    <Head title="Gestion des Utilisateurs" />
+    <Head title="Gestion des Roles" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
             <div class="flex items-center justify-between">
-                <h1 class="text-2xl font-bold">Gestion des Utilisateurs</h1>
+                <h1 class="text-2xl font-bold">Gestion des Roles</h1>
                 <Link :href="create().url">
-                    <Button variant="default"> Nouvel Utilisateur </Button>
+                    <Button variant="default"> Nouveau Role </Button>
                 </Link>
             </div>
             <div class="flex items-center gap-2 py-4">
                 <Input
                     class="max-w-52"
-                    placeholder="Filtrer Email..."
-                    :model-value="table.getColumn('email')?.getFilterValue() as string"
-                    @update:model-value="table.getColumn('email')?.setFilterValue($event)"
+                    placeholder="Filtrer Nom..."
+                    :model-value="table.getColumn('name')?.getFilterValue() as string"
+                    @update:model-value="table.getColumn('name')?.setFilterValue($event)"
                 />
                 <!-- <Button @click="randomize"> Randomize </Button> -->
                 <DropdownMenu>

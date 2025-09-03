@@ -26,7 +26,7 @@ defineProps<{
                 Resend verification email
             </Button>
 
-            <TextLink :href="logout()" as="button" class="mx-auto block text-sm"> Log out </TextLink>
+            <TextLink :href="logout()" as="button" class="mx-auto block text-sm"> Se déconnecter </TextLink>
         </Form>
     </AuthLayout>
 </template>

@@ -48,6 +48,7 @@ class FormationController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'user_id' => 'required|exists:users,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'logo_formation' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
         ]);
 
         $formation = new Formation();
@@ -57,9 +58,14 @@ class FormationController extends Controller
         $formation->end_date = $request->end_date;
         $formation->user_id = $request->user_id;
 
-        // Gestion de l'image
+        // Gestion de l'image principale
         if ($request->hasFile('image')) {
             $formation->image = $request->file('image')->store('formations', 'public');
+        }
+
+        // Gestion du logo
+        if ($request->hasFile('logo_formation')) {
+            $formation->logo_formation = $request->file('logo_formation')->store('icones_formation', 'public');
         }
 
         $formation->save();
@@ -98,7 +104,9 @@ class FormationController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $request->validate([
+        // 1️⃣ Validation des champs
+        dd($request);
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'start_date' => 'required|date',
@@ -107,25 +115,34 @@ class FormationController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
         ]);
 
+        // 2️⃣ Récupération de la formation
         $formation = Formation::findOrFail($id);
-        $formation->title = $request->title;
-        $formation->description = $request->description;
-        $formation->start_date = $request->start_date;
-        $formation->end_date = $request->end_date;
-        $formation->user_id = $request->user_id;
 
-        // Gestion de l'image
+        // 3️⃣ Mise à jour des champs texte et dates
+        $formation->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'start_date' => $validated['start_date'],
+            'end_date' => $validated['end_date'],
+            'user_id' => $validated['user_id'],
+        ]);
+
+        // 4️⃣ Gestion de l'image si uploadée
         if ($request->hasFile('image')) {
             // Supprimer l'ancienne image si elle existe
             if ($formation->image) {
                 Storage::disk('public')->delete($formation->image);
             }
-            $formation->image = $request->file('image')->store('formations', 'public');
+
+            $formation->update([
+                'image' => $request->file('image')->store('formations', 'public'),
+            ]);
         }
 
-        $formation->save();
-
-        return redirect()->route('formation.index')->with('status', 'Modification effectuée avec succès.');
+        // 5️⃣ Redirection avec message de succès
+        return redirect()
+            ->route('formation.index')
+            ->with('status', 'Modification effectuée avec succès.');
     }
 
     /**
