@@ -22,7 +22,7 @@ import DropdownAction from '@/components/ui/data-table/DataTableDemoColumn.vue';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { valueUpdater } from '@/utils';
+import { valueUpdater } from '@/lib/utils';
 import { Link } from '@inertiajs/vue3';
 import { h, ref } from 'vue';
 

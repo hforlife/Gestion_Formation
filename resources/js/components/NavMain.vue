@@ -1,11 +1,4 @@
 <script setup lang="ts">
-import type { LucideIcon } from "lucide-vue-next"
-import { ChevronRight } from "lucide-vue-next"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible'
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -13,56 +6,74 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-  SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 
+import { type NavItem } from '@/types'
+import { Link, usePage } from '@inertiajs/vue3'
+import { ref } from 'vue'
+import { ChevronDown, ChevronRight } from 'lucide-vue-next' // ✅ icônes
+
 defineProps<{
-  items: {
-    title: string
-    url: string
-    icon?: LucideIcon
-    isActive?: boolean
-    items?: {
-      title: string
-      url: string
-    }[]
-  }[]
+  items: NavItem[]
 }>()
+
+const page = usePage()
+const openGroup = ref<string | null>(null)
+
+const toggleGroup = (group: string) => {
+  openGroup.value = openGroup.value === group ? null : group
+}
 </script>
 
 <template>
-  <SidebarGroup>
-    <SidebarGroupLabel>Platform</SidebarGroupLabel>
+  <SidebarGroup class="px-2 py-0">
+    <SidebarGroupLabel> Plateforme </SidebarGroupLabel>
     <SidebarMenu>
-      <Collapsible
-        v-for="item in items"
-        :key="item.title"
-        as-child
-        :default-open="item.isActive"
-        class="group/collapsible"
-      >
-        <SidebarMenuItem>
-          <CollapsibleTrigger as-child>
-            <SidebarMenuButton :tooltip="item.title">
-              <component :is="item.icon" v-if="item.icon" />
-              <span>{{ item.title }}</span>
-              <ChevronRight class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-            </SidebarMenuButton>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <SidebarMenuSub>
-              <SidebarMenuSubItem v-for="subItem in item.items" :key="subItem.title">
-                <SidebarMenuSubButton as-child>
-                  <a :href="subItem.url">
-                    <span>{{ subItem.title }}</span>
-                  </a>
-                </SidebarMenuSubButton>
-              </SidebarMenuSubItem>
-            </SidebarMenuSub>
-          </CollapsibleContent>
+      <template v-for="item in items" :key="item.title">
+        <!-- Dropdown -->
+        <SidebarMenuItem v-if="item.children">
+          <SidebarMenuButton as-child @click="toggleGroup(item.title)">
+            <div class="flex items-center justify-between w-full gap-2 cursor-pointer">
+              <div class="flex items-center gap-2">
+                <!-- <component :is="item.icon" /> -->
+                <span>{{ item.title }}</span>
+              </div>
+              <component
+                :is="openGroup === item.title ? ChevronDown : ChevronRight"
+                class="w-4 h-4 text-muted-foreground transition-transform duration-200"
+              />
+            </div>
+          </SidebarMenuButton>
+
+          <SidebarMenuSub v-if="openGroup === item.title">
+            <SidebarMenuSubItem
+              v-for="child in item.children"
+              :key="child.title"
+            >
+              <SidebarMenuButton as-child :is-active="child.href === page.url">
+                <Link :href="child.href" class="flex items-center gap-2">
+                  <component :is="child.icon" />
+                  <span>{{ child.title }}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuSubItem>
+          </SidebarMenuSub>
         </SidebarMenuItem>
-      </Collapsible>
+
+        <!-- Simple -->
+        <SidebarMenuItem v-else>
+          <SidebarMenuButton
+            as-child
+            :is-active="item.href === page.url"
+          >
+            <Link :href="item.href" class="flex items-center gap-2">
+              <component :is="item.icon" />
+              <span>{{ item.title }}</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </template>
     </SidebarMenu>
   </SidebarGroup>
 </template>
