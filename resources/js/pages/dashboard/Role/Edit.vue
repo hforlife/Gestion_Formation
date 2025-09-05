@@ -7,7 +7,7 @@ import { index, update } from '@/routes/role';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
-import { toast } from 'vue-sonner';
+import Swal from 'sweetalert2';
 
 const props = defineProps<{
     role: { id: number; name: string; permissions: number[] };
@@ -53,13 +53,27 @@ function toggleSelectAll() {
 }
 
 function submitForm() {
-    form.put(update(props.role.id).url, {
+    form.transform((data) => ({
+        ...data,
+        _method: 'PUT',
+    })).post(update(props.role.id).url, {
         onSuccess: () => {
-            toast.success(`Rôle modifié avec succès`);
+            Swal.fire({
+                title: 'Succès',
+                text: 'Role modifié(e) avec succès.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            });
+            form.reset();
             router.visit(index().url);
         },
         onError: () => {
-            toast.error('Erreur lors de la modification');
+            Swal.fire({
+                title: 'Erreur',
+                text: 'Veuillez corriger les erreurs dans le formulaire.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
         },
     });
 }

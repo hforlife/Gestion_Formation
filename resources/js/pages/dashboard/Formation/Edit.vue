@@ -9,7 +9,8 @@ import { index, update } from '@/routes/formation';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { toast } from 'vue-sonner';
+import axios from 'axios'; // ⬅️ AJOUTEZ CET IMPORT
+import Swal from 'sweetalert2';
 
 const props = defineProps<{
     formation: {
@@ -20,20 +21,34 @@ const props = defineProps<{
         end_date: string;
         user_id: number;
         image: string;
+        logo_formation: string;
     };
     formateurs: Array<{ id: number; name: string }>;
 }>();
 
-// Initialiser les valeurs du formulaire avec les données existantes
 const form = useForm({
     title: props.formation.title || '',
     description: props.formation.description || '',
     start_date: props.formation.start_date || '',
     end_date: props.formation.end_date || '',
-    user_id: props.formation.user_id || '',
-    image: props.formation.image || null, // le fichier image sera remplacé si uploadé
+    user_id: props.formation.user_id.toString() || '',
+    image: null as File | null,
+    logo_formation: null as File | null,
 });
 
+const handleImageChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+        form.image = target.files[0];
+    }
+};
+
+const handleLogoChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+        form.logo_formation = target.files[0];
+    }
+};
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Tableau de bord', href: dashboard().url },
@@ -42,21 +57,32 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 function submitForm() {
-    console.log('Form data before submit:', {
-        title: form.title,
-        description: form.description,
-        start_date: form.start_date,
-        end_date: form.end_date,
-        user_id: form.user_id,
-        image: form.image,
-    });
-    form.put(update(props.formation.id).url, {
-        onSuccess: () => toast.success('Formation mise à jour avec succès'),
-        onError: () => toast.error('Erreur lors de la modification'),
+    form.transform((data) => ({
+        ...data,
+        _method: 'PUT',
+    })).post(update(props.formation.id).url, {
+        onSuccess: () => {
+            Swal.fire({
+                title: 'Succès',
+                text: 'Formation modifié(e) avec succès.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            });
+            form.reset();
+        },
+        onError: (errors) => {
+            Swal.fire({
+                title: 'Erreur',
+                text: 'Veuillez corriger les erreurs dans le formulaire.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
+        },
         forceFormData: true,
     });
 }
 </script>
+
 
 <template>
     <Head :title="`Modifier Formation: ${props.formation.title}`" />
@@ -70,7 +96,7 @@ function submitForm() {
                 </Link>
             </div>
 
-            <form @submit.prevent="submitForm" class="space-y-4">
+            <form @submit.prevent="submitForm" class="space-y-4" enctype="multipart/form-data">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <!-- Titre -->
                     <div class="space-y-2">
@@ -108,7 +134,7 @@ function submitForm() {
                                 <SelectValue placeholder="Sélectionnez un formateur" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem v-for="user in props.formateurs" :key="user.id" :value="user.id">
+                                <SelectItem v-for="user in props.formateurs" :key="user.id" :value="user.id.toString()">
                                     {{ user.name }}
                                 </SelectItem>
                             </SelectContent>
@@ -119,15 +145,32 @@ function submitForm() {
                     <!-- Image -->
                     <div class="space-y-2">
                         <label class="block font-medium capitalize">Image</label>
-                        <Input type="file" accept="image/*" @change="(e) => (form.image = e.target.files[0])" />
+                        <Input type="file" accept="image/*" @change="handleImageChange" />
                         <span v-if="form.errors.image" class="text-sm text-red-600">{{ form.errors.image }}</span>
+                        <div v-if="props.formation.image" class="mt-2">
+                            <p class="text-sm text-gray-500">Image actuelle:</p>
+                            <img :src="`/storage/${props.formation.image}`" alt="Image actuelle" class="mt-1 h-20 w-20 object-cover rounded">
+                        </div>
+                    </div>
+
+                    <!-- Logo Formation -->
+                    <div class="space-y-2">
+                        <label class="block font-medium capitalize">Logo Formation</label>
+                        <Input type="file" accept="image/*" @change="handleLogoChange" />
+                        <span v-if="form.errors.logo_formation" class="text-sm text-red-600">{{ form.errors.logo_formation }}</span>
+                        <div v-if="props.formation.logo_formation" class="mt-2">
+                            <p class="text-sm text-gray-500">Logo actuel:</p>
+                            <img :src="`/storage/${props.formation.logo_formation}`" alt="Logo actuel" class="mt-1 h-20 w-20 object-cover rounded">
+                        </div>
                     </div>
                 </div>
 
                 <div class="flex gap-2">
-                    <Button type="submit" :disabled="form.processing">Enregistrer</Button>
+                    <Button type="submit">
+                        Modifier
+                    </Button>
                     <Link :href="index().url">
-                        <Button variant="default">Annuler</Button>
+                        <Button variant="outline">Annuler</Button>
                     </Link>
                 </div>
             </form>

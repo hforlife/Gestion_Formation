@@ -7,7 +7,7 @@ import { create, index, store } from '@/routes/role';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
-import { toast } from 'vue-sonner';
+import Swal from 'sweetalert2';
 
 interface Permission {
     id: number;
@@ -59,11 +59,22 @@ const breadcrumbs: BreadcrumbItem[] = [
 function submitForm() {
     form.post(store().url, {
         onSuccess: () => {
-            toast.success(`Rôle créé avec succès`);
+            Swal.fire({
+                title: 'Succès',
+                text: 'Role ajouté(e) avec succès.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            });
+             form.reset();
             router.visit(index().url);
         },
         onError: () => {
-            toast.error('Erreur lors de la création');
+            Swal.fire({
+                title: 'Erreur',
+                text: 'Veuillez corriger les erreurs dans le formulaire.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
         },
     });
 }

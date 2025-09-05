@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { dashboard } from '@/routes';
 import { create, index } from '@/routes/formation';
 import { type BreadcrumbItem } from '@/types';
@@ -23,8 +24,8 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { valueUpdater } from '@/lib/utils';
-import { Link } from '@inertiajs/vue3';
-import { h, ref } from 'vue';
+import { Link, router } from '@inertiajs/vue3';
+import { h, ref, watch } from 'vue';
 
 export interface Formation {
     id: number;
@@ -36,9 +37,25 @@ export interface Formation {
 }
 
 const props = defineProps<{
-    formations: Formation[];
+    formations: {
+        data: Formation[];
+        current_page: number;
+        last_page: number;
+        per_page: number;
+        total: number;
+        links: { url: string | null; label: string; active: boolean }[];
+    };
 }>();
 
+// Les données du tableau avec watcher
+const formationsData = ref<Formation[]>(props.formations.data);
+watch(
+    () => props.formations.data,
+    (newData) => {
+        formationsData.value = newData;
+    },
+    { immediate: true },
+);
 
 const columns: ColumnDef<Formation>[] = [
     {
@@ -66,21 +83,39 @@ const columns: ColumnDef<Formation>[] = [
     {
         accessorKey: 'description',
         header: 'Description',
-        cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('description')),
+        cell: ({ row }) => {
+            const description = row.getValue('description') as string;
+            const truncated = description.length > 50 ? description.substring(0, 50) + '...' : description;
+
+            return h(
+                'div',
+                {
+                    class: 'truncate max-w-48 capitalize',
+                },
+                [
+                    // Avec Tooltip (décommentez si disponible)
+                    // h(Tooltip, {}, [
+                    //     h(TooltipTrigger, { as: 'span' }, truncated),
+                    //     h(TooltipContent, {}, description)
+                    // ])
+                    truncated,
+                ],
+            );
+        },
     },
     {
         accessorKey: 'start_date',
-        header: "Date de début",
+        header: 'Date de début',
         cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('start_date')),
     },
     {
         accessorKey: 'end_date',
-        header: "Date de fin",
+        header: 'Date de fin',
         cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('end_date')),
     },
     {
         accessorKey: 'user_id',
-        header: "Formateur",
+        header: 'Formateur',
         cell: ({ row }) => h('div', { class: 'capitalize' }, row.original.formateur?.name || '—'),
     },
     {
@@ -102,15 +137,15 @@ const columns: ColumnDef<Formation>[] = [
     },
 ];
 
+// États table
 const sorting = ref<SortingState>([]);
 const columnFilters = ref<ColumnFiltersState>([]);
 const columnVisibility = ref<VisibilityState>({});
 const rowSelection = ref({});
 const expanded = ref<ExpandedState>({});
-const tableData = ref<Formation[]>(props.formations);
 
 const table = useVueTable({
-    data: tableData.value,
+    data: formationsData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -141,7 +176,6 @@ const table = useVueTable({
     },
 });
 
-
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Tableau de bord',
@@ -152,6 +186,21 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: index().url,
     },
 ];
+
+// Pagination côté Vue → utilise les links renvoyés par Laravel
+function goToPage(url: string | null) {
+    if (url) {
+        router.get(
+            url,
+            {},
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+            },
+        );
+    }
+}
 </script>
 
 <template>
@@ -226,14 +275,36 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </Table>
             </div>
 
-            <div class="flex items-center justify-end space-x-2 py-4">
-                <div class="flex-1 text-sm text-muted-foreground">
-                    {{ table.getFilteredSelectedRowModel().rows.length }} of {{ table.getFilteredRowModel().rows.length }} ligne(s) selectionné.
-                </div>
-                <div class="space-x-2">
-                    <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()" @click="table.previousPage()"> Précedent </Button>
-                    <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()"> Suivant </Button>
-                </div>
+            <!-- ✅ Pagination avec shadcn-vue -->
+            <Pagination v-if="props.formations.links.length > 1">
+                <PaginationContent>
+                    <!-- Bouton Précédent -->
+                    <PaginationPrevious
+                        :class="{ 'cursor-not-allowed opacity-50': !props.formations.links[0].url }"
+                        :aria-disabled="!props.formations.links[0].url"
+                        @click="goToPage(props.formations.links[0].url)"
+                    />
+
+                    <!-- Pages -->
+                    <template v-for="(link, index) in props.formations.links.slice(1, -1)" :key="index">
+                        <PaginationItem :is-active="link.active" @click="goToPage(link.url)">
+                            {{ link.label }}
+                        </PaginationItem>
+                    </template>
+
+                    <!-- Bouton Suivant -->
+                    <PaginationNext
+                        :class="{ 'cursor-not-allowed opacity-50': !props.formations.links[props.formations.links.length - 1].url }"
+                        :aria-disabled="!props.formations.links[props.formations.links.length - 1].url"
+                        @click="goToPage(props.formations.links[props.formations.links.length - 1].url)"
+                    />
+                </PaginationContent>
+            </Pagination>
+
+            <!-- Info de pagination -->
+            <div class="text-center text-sm text-muted-foreground">
+                Affichage des étudiants {{ props.formations.data.length ? props.formations.data.length : 0 }} sur {{ props.formations.total }} total
+                (Page {{ props.formations.current_page }} sur {{ props.formations.last_page }})
             </div>
         </div>
     </AppLayout>

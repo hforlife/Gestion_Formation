@@ -8,7 +8,7 @@ import { dashboard } from '@/routes';
 import { create, index, store } from '@/routes/formation';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { toast } from 'vue-sonner';
+import Swal from 'sweetalert2';
 
 const props = defineProps<{
     formateurs: Array<{ id: number; name: string }>;
@@ -43,10 +43,21 @@ const breadcrumbs: BreadcrumbItem[] = [
 function submitForm() {
     form.post(store().url, {
         onSuccess: () => {
-            toast.success('Formation créée avec succès');
+            Swal.fire({
+                title: 'Succès',
+                text: 'Formation ajouté(e) avec succès.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            });
+            form.reset();
         },
         onError: () => {
-            toast.error('Erreur lors de la création');
+            Swal.fire({
+                title: 'Erreur',
+                text: 'Veuillez corriger les erreurs dans le formulaire.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
         },
         forceFormData: true, // 🔑 obligatoire pour envoyer le fichier
     });
@@ -121,7 +132,7 @@ function submitForm() {
                     <!-- Logo de la Formation -->
                     <div class="space-y-2">
                         <label for="logo_formation" class="block font-medium capitalize"> Logo de la formation </label>
-                        <Input type="file" accept="image/*" @change="(e) => (form.image = e.target.files[0])" />
+                        <Input type="file" accept="image/*" @change="(e) => (form.logo_formation = e.target.files[0])" />
                         <span v-if="form.errors.logo_formation" class="text-sm text-red-600"> {{ form.errors.logo_formation }} </span>
                     </div>
                 </div>

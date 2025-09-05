@@ -8,7 +8,7 @@ import { dashboard } from '@/routes';
 import { create, index, store } from '@/routes/etudiant';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { toast } from 'vue-sonner';
+import Swal from 'sweetalert2';
 
 const props = defineProps<{
     formations: Array<{ id: number; title: string }>;
@@ -45,10 +45,21 @@ const breadcrumbs: BreadcrumbItem[] = [
 function submitForm() {
     form.post(store().url, {
         onSuccess: () => {
-            toast.success('Etudiant créée avec succès');
+             Swal.fire({
+                title: 'Succès',
+                text: 'Etudiant ajouté avec succès.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            });
+            form.reset();
         },
         onError: () => {
-            toast.error('Erreur lors de la création');
+            Swal.fire({
+                title: 'Erreur',
+                text: 'Veuillez corriger les erreurs dans le formulaire.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
         },
         forceFormData: true, // 🔑 obligatoire pour envoyer le fichier
     });
@@ -93,7 +104,7 @@ function submitForm() {
                     <!-- Téléphone -->
                     <div class="space-y-2">
                         <label for="telephone" class="block font-medium capitalize"> N° Téléphone </label>
-                        <Input type="text" v-model="form.telephone" plaveholder="+223 00 00 00 00" required />
+                        <Input type="text" v-model="form.telephone" placeholder="+223 00 00 00 00" required />
                         <span v-if="form.errors.telephone" class="text-sm text-red-600"> {{ form.errors.telephone }} </span>
                     </div>
 

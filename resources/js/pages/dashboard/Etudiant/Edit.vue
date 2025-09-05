@@ -7,7 +7,7 @@ import { dashboard } from '@/routes';
 import { index, update } from '@/routes/etudiant';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { toast } from 'vue-sonner';
+import Swal from 'sweetalert2';
 
 const props = defineProps<{
     etudiant: {
@@ -54,12 +54,26 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 function submitForm() {
-    form.put(update(props.etudiant.id).url, {
+    form.transform((data) => ({
+        ...data,
+        _method: 'PUT',
+    })).post(update(props.etudiant.id).url, {
         onSuccess: () => {
-            toast.success('Etudiant modifié(e) avec succès');
+            Swal.fire({
+                title: 'Succès',
+                text: 'Etudiant modifié(e) avec succès.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            });
+            form.reset();
         },
         onError: () => {
-            toast.error('Erreur lors de la modification');
+            Swal.fire({
+                title: 'Erreur',
+                text: 'Veuillez corriger les erreurs dans le formulaire.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
         },
         forceFormData: true, // 🔑 obligatoire pour envoyer le fichier
     });
@@ -105,7 +119,9 @@ function submitForm() {
                     <div class="space-y-2">
                         <label for="telephone" class="block font-medium capitalize"> N° Téléphone </label>
                         <Input type="text" v-model="form.telephone" required />
-                        <span v-if="form.errors.telephone" placeholder="+223 00 00 00 00" class="text-sm text-red-600"> {{ form.errors.telephone }} </span>
+                        <span v-if="form.errors.telephone" placeholder="+223 00 00 00 00" class="text-sm text-red-600">
+                            {{ form.errors.telephone }}
+                        </span>
                     </div>
 
                     <!-- Adresse -->
@@ -130,8 +146,8 @@ function submitForm() {
                                 <SelectValue placeholder="Sélectionnez une formation" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem v-for="etudiant in formations" :key="etudiant.id" :value="etudiant.id">
-                                    {{ etudiant.title }}
+                                <SelectItem v-for="formation in formations" :key="formation.id" :value="formation.id">
+                                    {{ formation.title }}
                                 </SelectItem>
                             </SelectContent>
                         </Select>

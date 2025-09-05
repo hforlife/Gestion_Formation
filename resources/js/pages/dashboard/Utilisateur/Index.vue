@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import { create, index } from '@/routes/user';
@@ -24,7 +25,7 @@ import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { valueUpdater } from '@/lib/utils';
 import { Link } from '@inertiajs/vue3';
-import { h, ref } from 'vue';
+import { h, ref, watch } from 'vue';
 
 export interface User {
     id: number;
@@ -34,8 +35,24 @@ export interface User {
 }
 
 const props = defineProps<{
-    users: User[];
+    users: {
+        data: User[];
+        current_page: number;
+        last_page: number;
+        per_page: number;
+        total: number;
+        links: { url: string | null; label: string; active: boolean }[];
+    };
 }>();
+
+const usersData = ref<User[]>(props.users.data);
+watch(
+    () => props.users.data,
+    (newData) => {
+        usersData.value = newData;
+    },
+    { immediate: true },
+);
 
 const columns: ColumnDef<User>[] = [
     {
@@ -98,15 +115,15 @@ const columns: ColumnDef<User>[] = [
     },
 ];
 
+// États table
 const sorting = ref<SortingState>([]);
 const columnFilters = ref<ColumnFiltersState>([]);
 const columnVisibility = ref<VisibilityState>({});
 const rowSelection = ref({});
 const expanded = ref<ExpandedState>({});
-const tableData = ref<User[]>(props.users);
 
 const table = useVueTable({
-    data: tableData.value,
+    data: usersData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -147,6 +164,21 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: index().url,
     },
 ];
+
+// Pagination côté Vue → utilise les links renvoyés par Laravel
+function goToPage(url: string | null) {
+    if (url) {
+        router.get(
+            url,
+            {},
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+            },
+        );
+    }
+}
 </script>
 
 <template>
@@ -221,14 +253,36 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </Table>
             </div>
 
-            <div class="flex items-center justify-end space-x-2 py-4">
-                <div class="flex-1 text-sm text-muted-foreground">
-                    {{ table.getFilteredSelectedRowModel().rows.length }} of {{ table.getFilteredRowModel().rows.length }} ligne(s) selectionné.
-                </div>
-                <div class="space-x-2">
-                    <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()" @click="table.previousPage()"> Précedent </Button>
-                    <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()"> Suivant </Button>
-                </div>
+            <!-- ✅ Pagination avec shadcn-vue -->
+            <Pagination v-if="props.users.links.length > 1">
+                <PaginationContent>
+                    <!-- Bouton Précédent -->
+                    <PaginationPrevious
+                        :class="{ 'cursor-not-allowed opacity-50': !props.users.links[0].url }"
+                        :aria-disabled="!props.users.links[0].url"
+                        @click="goToPage(props.users.links[0].url)"
+                    />
+
+                    <!-- Pages -->
+                    <template v-for="(link, index) in props.users.links.slice(1, -1)" :key="index">
+                        <PaginationItem :is-active="link.active" @click="goToPage(link.url)">
+                            {{ link.label }}
+                        </PaginationItem>
+                    </template>
+
+                    <!-- Bouton Suivant -->
+                    <PaginationNext
+                        :class="{ 'cursor-not-allowed opacity-50': !props.users.links[props.users.links.length - 1].url }"
+                        :aria-disabled="!props.users.links[props.users.links.length - 1].url"
+                        @click="goToPage(props.users.links[props.users.links.length - 1].url)"
+                    />
+                </PaginationContent>
+            </Pagination>
+
+            <!-- Info de pagination -->
+            <div class="text-center text-sm text-muted-foreground">
+                Affichage des étudiants {{ props.users.data.length ? props.users.data.length : 0 }} sur {{ props.users.total }} total
+                (Page {{ props.users.current_page }} sur {{ props.users.last_page }})
             </div>
         </div>
     </AppLayout>

@@ -12,6 +12,7 @@ use Inertia\Inertia;
 
 
 
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
 
 Route::resource('/formation', FormationController::class)->middleware(['auth', 'verified']);
@@ -20,6 +21,7 @@ Route::put('/etudiant/{id}/status', [\App\Http\Controllers\Admin\EtudiantControl
     ->name('etudiant.updateStatus');
 Route::resource('/certificat', CertificatController::class)->middleware(['auth', 'verified']);
 Route::get('/certificat/{userId}/{formId}/generate', [PDFController::class, 'PDF'])->name('pdf.generate');
+Route::get('/certificat/{user}/{formation}/show', [PDFController::class, 'show'])->name('pdf.show');
 Route::resource('/user', UserController::class)->middleware(['auth', 'verified']);
 Route::resource('/role', RoleController::class)->middleware(['auth', 'verified']);
 

@@ -111,6 +111,40 @@
         .hidden {
             visibility: hidden;
         }
+
+        .certificate-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 50px;
+            width: 100%;
+        }
+
+        .certificate-text {
+            text-align: right;
+            font-size: 14px;
+            line-height: 1.2;
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+        .certificate-text-1 {
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.2;
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .certificate-logo {
+            flex-shrink: 0;
+        }
+
+        .certificate-logo img {
+            width: 50px;
+            height: auto;
+        }
+
     </style>
 </head>
 
@@ -134,12 +168,22 @@
             <div class="formation">{{ $formationName }}</div>
         </div>
 
-        <p>Ce certificat lui est délivré pour en jouir avec </p>
-        <p>les droits et prérogatives qui y sont attachés.</p>
+        <!-- Partie certificat avec logo côte à côte -->
+        <div class="certificate-info">
+            {{-- <div class="certificate-logo">
+                <img src="{{ $formationLogo }}" alt="Logo Formation">
+            </div> --}}
+            <div class="certificate-text">
+                <p>Ce certificat lui est délivré pour en jouir avec</p>
+                <p>les droits et prérogatives qui y sont attachés.</p>
+                {{-- <p>Fait à Bamako, le {{ \Carbon\Carbon::now()->format('d/m/Y') }}</p> --}}
+            </div>
+            
+        </div>
+
 
         <div class="footer">
-            <p>+223 20 24 26 72 <span class="hidden">$$$$$$$$$$$$$$$$$$</span> contact@doucsoft.tech <span
-                    class="hidden">$$$$$$$$$$$$$$$$$$</span> www.doucsoft.tech</p>
+            <p>+223 20 24 26 72 <span class="hidden">$$$$$$$$$$$$$$$$$$</span> contact@doucsoft.tech <span class="hidden">$$$$$$$$$$$$$$$$$$</span> www.doucsoft.tech</p>
             <p>Sotuba ACI, Près de Japan Motors, Route de Koulikoro, Imm Wafa Simpara</p>
         </div>
     </div>

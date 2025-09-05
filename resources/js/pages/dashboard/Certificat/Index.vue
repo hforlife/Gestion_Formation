@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { dashboard } from '@/routes';
 import { index } from '@/routes/certificat';
 import { type BreadcrumbItem } from '@/types';
@@ -10,7 +11,8 @@ import { ArrowUpDown } from 'lucide-vue-next';
 
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { h, ref } from 'vue';
+import { Link, router } from '@inertiajs/vue3';
+import { h, ref, watch } from 'vue';
 
 export interface Etudiant {
     id: number;
@@ -20,20 +22,43 @@ export interface Etudiant {
     telephone: string;
     adresse: string;
     profession: string;
-    formation_id: number; // 👈 ajoute ça
+    formation_id: number;
     formation?: { title: string };
     inscription_date: string;
     status: 'En Cours' | 'Validé' | 'Rejété';
 }
 
 const props = defineProps<{
-    etudiants: Etudiant[];
+    etudiants: {
+        data: Etudiant[];
+        current_page: number;
+        last_page: number;
+        per_page: number;
+        total: number;
+        links: { url: string | null; label: string; active: boolean }[];
+    };
 }>();
 
-// Bouton pour générer le certificat
-function generateCertificat(userId: number, formId: number) {
+// Les données du tableau avec watcher
+const etudiantsData = ref<Etudiant[]>(props.etudiants.data);
+watch(
+    () => props.etudiants.data,
+    (newData) => {
+        etudiantsData.value = newData;
+    },
+    { immediate: true },
+);
+
+// Bouton pour générer le certificat PDF
+function generateCertificatPDF(userId: number, formId: number) {
     const url = `/certificat/${userId}/${formId}/generate`;
-    window.open(url, '_blank'); // Ouvre le PDF dans un nouvel onglet
+    window.open(url, '_blank');
+}
+
+// Bouton pour voir en mode navigateur
+function viewCertificate(userId: number, formId: number) {
+    const url = `/certificat/${userId}/${formId}/show`;
+    window.open(url, '_blank');
 }
 
 const columns: ColumnDef<Etudiant>[] = [
@@ -68,22 +93,39 @@ const columns: ColumnDef<Etudiant>[] = [
         cell: ({ row }) => {
             const etudiant = row.original;
             return h(
-                Button,
-                {
-                    variant: 'default',
-                    size: 'sm',
-                    onClick: () => generateCertificat(etudiant.id, etudiant.formation_id),
-                },
-                () => 'Générer',
+                'div',
+                { class: 'flex gap-2' },
+                [
+                    h(
+                        Button,
+                        {
+                            variant: 'outline',
+                            size: 'sm',
+                            onClick: () => viewCertificate(etudiant.id, etudiant.formation_id),
+                        },
+                        () => '👀 Voir'
+                    ),
+                    h(
+                        Button,
+                        {
+                            variant: 'default',
+                            size: 'sm',
+                            onClick: () => generateCertificatPDF(etudiant.id, etudiant.formation_id),
+                        },
+                        () => '📄 PDF'
+                    )
+                ]
             );
         },
     },
 ];
 
-const tableData = ref<Etudiant[]>(props.etudiants);
+// États table
+
+const rowSelection = ref({});
 
 const table = useVueTable({
-    data: tableData.value,
+    data: etudiantsData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -95,6 +137,21 @@ const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Tableau de bord', href: dashboard().url },
     { title: 'Certificats', href: index().url },
 ];
+
+// Pagination côté Vue → utilise les links renvoyés par Laravel
+function goToPage(url: string | null) {
+    if (url) {
+        router.get(
+            url,
+            {},
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+            },
+        );
+    }
+}
 </script>
 
 <template>
@@ -124,6 +181,38 @@ const breadcrumbs: BreadcrumbItem[] = [
                         </TableRow>
                     </TableBody>
                 </Table>
+            </div>
+
+            <!-- ✅ Pagination avec shadcn-vue -->
+            <Pagination v-if="props.etudiants.links.length > 1">
+                <PaginationContent>
+                    <!-- Bouton Précédent -->
+                    <PaginationPrevious
+                        :class="{ 'cursor-not-allowed opacity-50': !props.etudiants.links[0].url }"
+                        :aria-disabled="!props.etudiants.links[0].url"
+                        @click="goToPage(props.etudiants.links[0].url)"
+                    />
+
+                    <!-- Pages -->
+                    <template v-for="(link, index) in props.etudiants.links.slice(1, -1)" :key="index">
+                        <PaginationItem :is-active="link.active" @click="goToPage(link.url)">
+                            {{ link.label }}
+                        </PaginationItem>
+                    </template>
+
+                    <!-- Bouton Suivant -->
+                    <PaginationNext
+                        :class="{ 'cursor-not-allowed opacity-50': !props.etudiants.links[props.etudiants.links.length - 1].url }"
+                        :aria-disabled="!props.etudiants.links[props.etudiants.links.length - 1].url"
+                        @click="goToPage(props.etudiants.links[props.etudiants.links.length - 1].url)"
+                    />
+                </PaginationContent>
+            </Pagination>
+
+            <!-- Info de pagination -->
+            <div class="text-center text-sm text-muted-foreground">
+                Affichage des étudiants {{ props.etudiants.data.length ? props.etudiants.data.length : 0 }} sur {{ props.etudiants.total }} total
+                (Page {{ props.etudiants.current_page }} sur {{ props.etudiants.last_page }})
             </div>
         </div>
     </AppLayout>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { dashboard } from '@/routes';
 import { create, index } from '@/routes/etudiant';
 import { type BreadcrumbItem } from '@/types';
@@ -24,8 +25,7 @@ import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { valueUpdater } from '@/lib/utils';
 import { Link, router } from '@inertiajs/vue3';
-import { h, ref } from 'vue';
-
+import { h, ref, watch } from 'vue';
 
 export interface Etudiant {
     id: number;
@@ -36,21 +36,31 @@ export interface Etudiant {
     adresse: string;
     profession: string;
     formation_id: string;
+    formation?: { id: number; title: string };
     status: 'En Cours' | 'Validé' | 'Rejété';
+    inscription_date: string;
 }
 
 const props = defineProps<{
-    etudiants: Etudiant[];
+    etudiants: {
+        data: Etudiant[];
+        current_page: number;
+        last_page: number;
+        per_page: number;
+        total: number;
+        links: { url: string | null; label: string; active: boolean }[];
+    };
 }>();
 
-// const data = shallowRef<user[]>([
-//     {
-//         id: props.users.id,
-//         name: props.users.name,
-//         username: props.users.username,
-//         email: props.users.email,
-//     },
-// ]);
+// Les données du tableau avec watcher
+const etudiantsData = ref<Etudiant[]>(props.etudiants.data);
+watch(
+    () => props.etudiants.data,
+    (newData) => {
+        etudiantsData.value = newData;
+    },
+    { immediate: true },
+);
 
 const columns: ColumnDef<Etudiant>[] = [
     {
@@ -132,8 +142,16 @@ const columns: ColumnDef<Etudiant>[] = [
                     value: etudiant.status,
                     onChange: (e: Event) => {
                         const newStatus = (e.target as HTMLSelectElement).value;
-                        // Requête vers Laravel via Inertia
-                        router.put(`/etudiant/${etudiant.id}/status`, { status: newStatus });
+                        router.put(
+                            `/etudiant/${etudiant.id}/status`,
+                            { status: newStatus },
+                            {
+                                preserveScroll: true,
+                                onSuccess: () => {
+                                    router.reload({ only: ['etudiants'] });
+                                },
+                            },
+                        );
                     },
                 },
                 [
@@ -153,25 +171,25 @@ const columns: ColumnDef<Etudiant>[] = [
                 id: etudiant.id,
                 entityName: 'Etudiant',
                 routes: {
-                    show: '/etudiant', // /user/{id}
-                    edit: '/etudiant', // /user/{id}/edit
-                    delete: '/etudiant', // /user/{id}
-                    index: '/etudiant', // /user
+                    show: '/etudiant',
+                    edit: '/etudiant',
+                    delete: '/etudiant',
+                    index: '/etudiant',
                 },
             });
         },
     },
 ];
 
+// États table
 const sorting = ref<SortingState>([]);
 const columnFilters = ref<ColumnFiltersState>([]);
 const columnVisibility = ref<VisibilityState>({});
 const rowSelection = ref({});
 const expanded = ref<ExpandedState>({});
-const tableData = ref<Etudiant[]>(props.etudiants);
 
 const table = useVueTable({
-    data: tableData.value,
+    data: etudiantsData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -202,14 +220,6 @@ const table = useVueTable({
     },
 });
 
-// const statuses: user['name'][] = 'name';
-// function randomize() {
-//     data.value = data.value.map((item) => ({
-//         ...item,
-//         status: statuses[Math.floor(Math.random() * statuses.length)],
-//     }));
-// }
-
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Tableau de bord',
@@ -220,6 +230,21 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: index().url,
     },
 ];
+
+// Pagination côté Vue → utilise les links renvoyés par Laravel
+function goToPage(url: string | null) {
+    if (url) {
+        router.get(
+            url,
+            {},
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+            },
+        );
+    }
+}
 </script>
 
 <template>
@@ -240,7 +265,6 @@ const breadcrumbs: BreadcrumbItem[] = [
                     :model-value="table.getColumn('email')?.getFilterValue() as string"
                     @update:model-value="table.getColumn('email')?.setFilterValue($event)"
                 />
-                <!-- <Button @click="randomize"> Randomize </Button> -->
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <Button variant="outline" class="ml-auto"> Colonnes <ChevronDown class="ml-2 h-4 w-4" /> </Button>
@@ -279,29 +303,46 @@ const breadcrumbs: BreadcrumbItem[] = [
                                         <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
                                     </TableCell>
                                 </TableRow>
-                                <TableRow v-if="row.getIsExpanded()">
-                                    <TableCell :colspan="row.getAllCells().length">
-                                        {{ JSON.stringify(row.original) }}
-                                    </TableCell>
-                                </TableRow>
                             </template>
                         </template>
 
                         <TableRow v-else>
-                            <TableCell :colspan="columns.length" class="h-24 text-center"> Aucun resultat. </TableCell>
+                            <TableCell :colspan="columns.length" class="h-24 text-center"> Aucun résultat. </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
             </div>
 
-            <div class="flex items-center justify-end space-x-2 py-4">
-                <div class="flex-1 text-sm text-muted-foreground">
-                    {{ table.getFilteredSelectedRowModel().rows.length }} of {{ table.getFilteredRowModel().rows.length }} ligne(s) selectionné.
-                </div>
-                <div class="space-x-2">
-                    <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()" @click="table.previousPage()"> Précedent </Button>
-                    <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()"> Suivant </Button>
-                </div>
+            <!-- ✅ Pagination avec shadcn-vue -->
+            <Pagination v-if="props.etudiants.links.length > 1">
+                <PaginationContent>
+                    <!-- Bouton Précédent -->
+                    <PaginationPrevious
+                        :class="{ 'cursor-not-allowed opacity-50': !props.etudiants.links[0].url }"
+                        :aria-disabled="!props.etudiants.links[0].url"
+                        @click="goToPage(props.etudiants.links[0].url)"
+                    />
+
+                    <!-- Pages -->
+                    <template v-for="(link, index) in props.etudiants.links.slice(1, -1)" :key="index">
+                        <PaginationItem :is-active="link.active" @click="goToPage(link.url)">
+                            {{ link.label }}
+                        </PaginationItem>
+                    </template>
+
+                    <!-- Bouton Suivant -->
+                    <PaginationNext
+                        :class="{ 'cursor-not-allowed opacity-50': !props.etudiants.links[props.etudiants.links.length - 1].url }"
+                        :aria-disabled="!props.etudiants.links[props.etudiants.links.length - 1].url"
+                        @click="goToPage(props.etudiants.links[props.etudiants.links.length - 1].url)"
+                    />
+                </PaginationContent>
+            </Pagination>
+
+            <!-- Info de pagination -->
+            <div class="text-center text-sm text-muted-foreground">
+                Affichage des étudiants {{ props.etudiants.data.length ? props.etudiants.data.length : 0 }} sur {{ props.etudiants.total }} total
+                (Page {{ props.etudiants.current_page }} sur {{ props.etudiants.last_page }})
             </div>
         </div>
     </AppLayout>

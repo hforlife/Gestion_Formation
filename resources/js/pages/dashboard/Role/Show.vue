@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
-import { index } from '@/routes/role';
+import { index, edit } from '@/routes/role';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
@@ -47,10 +47,23 @@ const breadcrumbs: BreadcrumbItem[] = [
   <AppLayout :breadcrumbs="breadcrumbs">
     <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
       <div class="flex items-center justify-between">
-        <h1 class="text-2xl font-bold">Détails du rôle : {{ props.role.name }}</h1>
-        <Link :href="index().url">
-          <Button variant="default" >Retour à la liste</Button>
-        </Link>
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900"> {{ props.role.name }} </h1>
+        <p class="text-sm text-gray-600 mt-1">ID: {{ props.role.id }}</p>
+        </div>
+        
+        <div class="flex flex-wrap gap-2">
+          <Link :href="edit(role.id).url">
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
+              ✏️ Modifier
+            </button>
+          </Link>
+          <Link :href="index().url">
+            <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors text-sm font-medium">
+              ← Retour à la liste
+            </button>
+          </Link>
+        </div>
       </div>
 
       <!-- Permissions -->
@@ -72,3 +85,12 @@ const breadcrumbs: BreadcrumbItem[] = [
     </div>
   </AppLayout>
 </template>
+<style scoped>
+.whitespace-pre-line {
+  white-space: pre-line;
+}
+
+.prose {
+  max-width: none;
+}
+</style>

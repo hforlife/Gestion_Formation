@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
-import { type BreadcrumbItem } from '@/types';
-import { ref } from 'vue';
+import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
-import { index, show } from '@/routes/user';
+import { index, edit } from '@/routes/user';
+import { type BreadcrumbItem } from '@/types';
+import { Head, Link } from '@inertiajs/vue3';
 
 interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
+    id: number;
+    name: string;
+    username: string;
+    email: string;
 }
 
 const props = defineProps<{
-  users: User;
+    users: User;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -31,41 +30,59 @@ const breadcrumbs: BreadcrumbItem[] = [
         title: 'Détails Utilisateur',
         href: '#',
     },
-
 ];
 </script>
 
 <template>
-  <Head title="Détails Utilisateur" />
+    <Head title="Détails Utilisateur" />
 
-  <AppLayout :breadcrumbs="breadcrumbs">
-    <div class="p-6 rounded-lg space-y-4">
-      <h1 class="text-2xl font-bold mb-4">Détails de l'utilisateur</h1>
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <div class="flex flex-col gap-6 p-6">
+            <!-- En-tête -->
+            <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 md:text-3xl">{{ props.users.name }}</h1>
+                    <p class="mt-1 text-sm text-gray-600">ID: {{ props.users.id }}</p>
+                </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <p class="font-semibold">Nom :</p>
-          <p class="capitalize">{{ props.users.name }}</p>
-        </div>
-        <div>
-          <p class="font-semibold">Nom d'utilisateur :</p>
-          <p class="capitalize">{{ props.users.username }}</p>
-        </div>
-        <div>
-          <p class="font-semibold">Email :</p>
-          <p class="lowercase">{{ props.users.email }}</p>
-        </div>
-        <div>
-          <p class="font-semibold">ID :</p>
-          <p>{{ props.users.id }}</p>
-        </div>
-      </div>
+                <div class="flex flex-wrap gap-2">
+                    <Link :href="edit(props.users.id).url">
+                        <button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700">
+                            ✏️ Modifier
+                        </button>
+                    </Link>
+                    <Link :href="index().url">
+                        <button class="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 transition-colors hover:bg-gray-300">
+                            ← Retour à la liste
+                        </button>
+                    </Link>
+                </div>
+            </div>
 
-      <div class="mt-6">
-        <Link href="/user">
-          <Button variant="default">Retour à la liste</Button>
-        </Link>
-      </div>
-    </div>
-  </AppLayout>
+            <!-- Contenu principal -->
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <!-- Colonne gauche - Description -->
+                <div class="rounded-lg border border-gray-200 bg-white p-6">
+                   <h2 class="mb-4 text-lg font-semibold text-gray-900">Informations</h2>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-gray-600">Nom :</label>
+                            <p class="font-medium text-gray-900">{{ props.users.name || 'Non assigné' }}</p>
+                        </div>
+
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-gray-600">Nom D'utilisateur :</label>
+                            <p class="font-medium text-gray-900">{{ props.users.username || 'Non assigné' }}</p>
+                        </div>
+
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-gray-600">Adresse Email :</label>
+                            <p class="text-gray-900">{{ props.users.email }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </AppLayout>
 </template>

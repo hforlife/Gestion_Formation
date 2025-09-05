@@ -16,10 +16,17 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = $request->get('per_page', 10);
+
+        $roles = Role::with('permissions')
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage)
+            ->withQueryString();
+
         return Inertia::render('dashboard/Role/Index', [
-            'roles' => Role::with('permissions')->get(),
+            'roles' => $roles,
             'permissions' => Permission::count()
         ]);
     }

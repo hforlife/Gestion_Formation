@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
-import { index, edit } from '@/routes/formation';
+import { edit, index } from '@/routes/formation';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 
@@ -13,7 +13,7 @@ const props = defineProps<{
         start_date: string;
         end_date: string;
         user_id: number;
-        user: { id: number; name: string };
+        user?: { id: number; name: string }; // Changé de "formateur" à "user"
         image?: string;
     };
 }>();
@@ -23,45 +23,108 @@ const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Formations', href: index().url },
     { title: 'Détails Formation', href: '#' },
 ];
+
+// Fonction pour formater les dates
+const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('fr-FR', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+    });
+};
 </script>
 
 <template>
-  <Head :title="`Détails Formation: ${props.formation.title}`" />
+    <Head :title="`Détails Formation: ${formation.title}`" />
 
-  <AppLayout :breadcrumbs="breadcrumbs">
-    <div class="flex flex-col gap-4 p-4">
-      <div class="flex items-center justify-between">
-        <h1 class="text-2xl font-bold">{{ props.formation.title }}</h1>
-        <div class="flex gap-2">
-          <Link :href="edit(props.formation.id).url">
-            <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Modifier</button>
-          </Link>
-          <Link :href="index().url">
-            <button class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Retour à la liste</button>
-          </Link>
-        </div>
-      </div>
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <div class="flex flex-col gap-6 p-6">
+            <!-- En-tête -->
+            <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 md:text-3xl">{{ formation.title }}</h1>
+                    <p class="mt-1 text-sm text-gray-600">ID: {{ formation.id }}</p>
+                </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="space-y-2">
-          <p><strong>Description :</strong></p>
-          <p>{{ props.formation.description }}</p>
-        </div>
+                <div class="flex flex-wrap gap-2">
+                    <Link :href="edit(formation.id).url">
+                        <button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700">
+                            ✏️ Modifier
+                        </button>
+                    </Link>
+                    <Link :href="index().url">
+                        <button class="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 transition-colors hover:bg-gray-300">
+                            ← Retour à la liste
+                        </button>
+                    </Link>
+                </div>
+            </div>
 
-        <div class="space-y-2">
-          <p><strong>Formateur :</strong> {{ props.formation.formateur.name }}</p>
-          <p><strong>Date de début :</strong> {{ props.formation.start_date }}</p>
-          <p><strong>Date de fin :</strong> {{ props.formation.end_date }}</p>
-        </div>
+            <!-- Contenu principal -->
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <!-- Colonne gauche - Description -->
+                <div class="rounded-lg border border-gray-200 bg-white p-6">
+                    <h2 class="mb-4 text-lg font-semibold text-gray-900">Description de la formation</h2>
+                    <div class="prose max-w-none">
+                        <p class="leading-relaxed whitespace-pre-line text-gray-700">{{ formation.description }}</p>
+                    </div>
+                </div>
 
-        <div class="col-span-1 md:col-span-2 mt-4">
-          <p><strong>Image :</strong></p>
-          <div v-if="props.formation.image" class="mt-2">
-            <img :src="`/storage/${props.formation.image}`" alt="Image Formation" class="h-48 w-full object-cover rounded" />
-          </div>
-          <p v-else class="text-gray-500">Pas d'image disponible</p>
+                <!-- Colonne droite - Informations -->
+                <div class="rounded-lg border border-gray-200 bg-white p-6">
+                    <h2 class="mb-4 text-lg font-semibold text-gray-900">Informations</h2>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-gray-600">Formateur</label>
+                            <p class="font-medium text-gray-900">{{ formation.user?.name || 'Non assigné' }}</p>
+                        </div>
+
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-gray-600">Date de début</label>
+                            <p class="text-gray-900">{{ formatDate(formation.start_date) }}</p>
+                        </div>
+
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-gray-600">Date de fin</label>
+                            <p class="text-gray-900">{{ formatDate(formation.end_date) }}</p>
+                        </div>
+
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-gray-600">ID Formateur</label>
+                            <p class="text-gray-900">{{ formation.user_id }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image - Pleine largeur -->
+                <div class="col-span-1 rounded-lg border border-gray-200 bg-white p-6 lg:col-span-2">
+                    <h2 class="mb-4 text-lg font-semibold text-gray-900">Image de la formation</h2>
+
+                    <div v-if="formation.image" class="flex justify-center">
+                        <img
+                            :src="`/storage/${formation.image}`"
+                            :alt="`Image de ${formation.title}`"
+                            class="h-64 max-w-full rounded-lg border border-gray-200 object-contain"
+                        />
+                    </div>
+
+                    <div v-else class="py-8 text-center">
+                        <div class="mb-2 text-6xl text-gray-400">🖼️</div>
+                        <p class="text-gray-500">Aucune image disponible</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </AppLayout>
+    </AppLayout>
 </template>
+
+<style scoped>
+.whitespace-pre-line {
+    white-space: pre-line;
+}
+
+.prose {
+    max-width: none;
+}
+</style>

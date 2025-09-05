@@ -13,11 +13,17 @@ class EtudiantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $etudiant = Etudiant::with('formation')->get();
+        $perPage = $request->get('per_page', 10);
+
+        $etudiants = Etudiant::with('formation')
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage)
+            ->withQueryString();
+
         return Inertia::render('dashboard/Etudiant/Index', [
-            'etudiants' => $etudiant,
+            'etudiants' => $etudiants,
         ]);
     }
 
@@ -40,14 +46,14 @@ class EtudiantController extends Controller
     {
         //
         $request->validate([
-            'nom' => 'required',
-            'prenom' => 'required',
-            'email' => 'required',
-            'telephone' => 'required',
-            'adresse' => 'required',
-            'profession' => 'required',
-            'formation_id' => 'required',
-            'inscription_date' => 'required',
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'email' => 'required|email',
+            'telephone' => 'required|string|max:255',
+            'adresse' => 'required|string|max:255',
+            'profession' => 'required|string|max:255',
+            'formation_id' => 'required|exists:formation_id',
+            'inscription_date' => 'required|date',
             'status' => 'required',
         ]);
 
@@ -100,10 +106,12 @@ class EtudiantController extends Controller
      */
     public function edit(int $id)
     {
-        $etudiant = Etudiant::with('formation')->find($id);
+        $etudiant = Etudiant::with('formation')->findOrFail($id);
+        $formations = Formation::all();
 
         return Inertia::render('dashboard/Etudiant/Edit', [
             'etudiant' => $etudiant,
+            'formations' => $formations
         ]);
     }
 
@@ -114,15 +122,15 @@ class EtudiantController extends Controller
     {
         //
         $request->validate([
-            'nom' => 'nullable',
-            'prenom' => 'nullable',
-            'email' => 'nullable',
-            'telephone' => 'nullable',
-            'adresse' => 'nullable',
-            'profession' => 'nullable',
-            'formation_id' => 'nullable',
-            'inscription_date' => 'nullable',
-            'status' => 'nullable',
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'email' => 'required|email',
+            'telephone' => 'required|string|max:255',
+            'adresse' => 'required|string|max:255',
+            'profession' => 'required|string|max:255',
+            'formation_id' => 'required|exists:formations,id',
+            'inscription_date' => 'required|date',
+            'status' => 'required',
         ]);
 
         $user = Etudiant::findOrFail($id);

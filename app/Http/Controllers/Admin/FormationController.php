@@ -14,12 +14,18 @@ class FormationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // app/Http/Controllers/FormationController.php
+    public function index(Request $request)
     {
-        $formations = Formation::with('formateur')->get();
+        $perPage = $request->get('per_page', 10);
+
+        $formations = Formation::with('formateur')
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage)
+            ->withQueryString();
 
         return Inertia::render('dashboard/Formation/Index', [
-            'formations' => $formations
+            'formations' => $formations,
         ]);
     }
 
@@ -105,7 +111,6 @@ class FormationController extends Controller
     public function update(Request $request, int $id)
     {
         // 1️⃣ Validation des champs
-        dd($request);
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -113,6 +118,7 @@ class FormationController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'user_id' => 'required|exists:users,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'logo_formation' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
         ]);
 
         // 2️⃣ Récupération de la formation
@@ -139,7 +145,19 @@ class FormationController extends Controller
             ]);
         }
 
-        // 5️⃣ Redirection avec message de succès
+        // 5️⃣ Gestion du logo si uploadé
+        if ($request->hasFile('logo_formation')) {
+            // Supprimer l'ancien logo si il existe
+            if ($formation->logo_formation) {
+                Storage::disk('public')->delete($formation->logo_formation);
+            }
+
+            $formation->update([
+                'logo_formation' => $request->file('logo_formation')->store('icones_formation', 'public'),
+            ]);
+        }
+
+        // 6️⃣ Redirection avec message de succès
         return redirect()
             ->route('formation.index')
             ->with('status', 'Modification effectuée avec succès.');

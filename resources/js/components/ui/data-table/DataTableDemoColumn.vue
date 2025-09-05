@@ -5,6 +5,7 @@ import { MoreHorizontal } from 'lucide-vue-next'
 import { Edit, Trash, Eye } from 'lucide-vue-next'
 import { router, Link } from '@inertiajs/vue3'
 import { toast } from 'vue-sonner'
+import Swal from 'sweetalert2';
 
 
 
@@ -31,22 +32,24 @@ function deleteEntity() {
     if (confirm(`Confirmer la suppression de ce ${props.entityName} ?`)) {
       router.delete(`${props.routes.delete}/${props.id}`, {
         onSuccess: () => {
-          toast.success(`${props.entityName} supprimé avec succès`);
+          Swal.fire('Supprimé !' ,`${props.entityName} supprimé avec succès`, 'success');
           if (props.routes.index) {
             router.visit(props.routes.index, { preserveScroll: true });
           }
         },
         onError: () => {
-          toast.error(`Erreur lors de la suppression du ${props.entityName}`);
+          Swal.fire({
+                title: 'Erreur',
+                text: 'Erreur lors de la suppression.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
         },
       });
     }
   }
 }
 
-
-console.log(props.routes.edit);
-console.log(props.routes.edit, { id: props.id });
 </script>
 
 <template>
