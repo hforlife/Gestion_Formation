@@ -1,293 +1,106 @@
-<script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+<script setup>
+import { Link } from '@inertiajs/vue3';
+import ClientLayout from '@/layouts/ClientLayout.vue';
 </script>
 
 <template>
-    <Head title="Welcome">
-        <link rel="preconnect" href="https://fonts.bunny.net" />
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+    <ClientLayout>
+        <!-- 🌐 NAVBAR + 🎯 HERO -->
+    <div class="bg-white text-gray-800">
 
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
-
-        <!-- Font Awesome -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
-
-        <!-- Libraries Stylesheet -->
-        <link href="/asset/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
-
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="/asset/css/style.css" rel="stylesheet" />
-    </Head>
-
-<!-- Topbar Start -->
-    <div class="container-fluid bg-dark">
-        <div class="row py-2 px-lg-5">
-            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
-                <div class="d-inline-flex align-items-center text-white">
-                    <small><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</small>
-                    <small class="px-3">|</small>
-                    <small><i class="fa fa-envelope mr-2"></i>info@example.com</small>
-                </div>
-            </div>
-            <div class="col-lg-6 text-center text-lg-right">
-                <div class="d-inline-flex align-items-center">
-                    <a class="text-white px-2" href="">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a class="text-white px-2" href="">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="text-white px-2" href="">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a class="text-white px-2" href="">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a class="text-white pl-2" href="">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
+<!-- SECTION Description -->
+<section class="bg-white dark:bg-gray-900">
+  <div class="mx-auto max-w-screen-xl items-center gap-16 px-4 py-8 lg:grid lg:grid-cols-2 lg:px-6 lg:py-16">
+    <!-- Texte -->
+    <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+      <h2 class="mb-6 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+        Forma Plus by Doucsoft
+      </h2>
+      <p class="mb-4">
+        Bienvenue sur Forma Plus, votre partenaire privilégié pour la formation en présentiel et l’accompagnement numérique.
+        DoucSoft est une entreprise de services numériques (ESN) basée au Mali, avec une ambition forte :
+        se hisser parmi les leaders de la révolution digitale en Afrique.
+      </p>
+      <p class="mb-4">
+        Nous sommes spécialisés dans le conseil, les services informatiques et la transformation numérique.
+        Grâce à notre expertise dans les technologies modernes telles que le cloud, le digital et les plateformes,
+        nous permettons à nos clients de se positionner en avant-garde du développement numérique.
+      </p>
+      <p>
+        Conscients des défis technologiques du continent africain, nous concevons des outils et services innovants
+        pour améliorer l’accès et l’utilisation des technologies de l’information à travers l’Afrique.
+      </p>
     </div>
-    <!-- Topbar End -->
 
-
-    <!-- Navbar Start -->
-    <div class="container-fluid p-0">
-        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
-            <a href="index.html" class="navbar-brand ml-lg-3">
-                <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-book-reader mr-3"></i>Edukate</h1>
-            </a>
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
-                <div class="navbar-nav mx-auto py-0">
-                    <a href="index.html" class="nav-item nav-link">Home</a>
-                    <a href="about.html" class="nav-item nav-link active">About</a>
-                    <a href="course.html" class="nav-item nav-link">Courses</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="detail.html" class="dropdown-item">Course Detail</a>
-                            <a href="feature.html" class="dropdown-item">Our Features</a>
-                            <a href="team.html" class="dropdown-item">Instructors</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        </div>
-                    </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-                </div>
-                <a href="" class="btn btn-primary py-2 px-4 d-none d-lg-block">Join Us</a>
-            </div>
-        </nav>
+    <!-- Images -->
+    <div class="mt-8 grid grid-cols-2 gap-4">
+      <img
+        class="w-full rounded-lg shadow"
+        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png"
+        alt="Formation en présentiel"
+      />
+      <img
+        class="mt-4 w-full rounded-lg shadow lg:mt-10"
+        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png"
+        alt="Accompagnement numérique"
+      />
     </div>
-    <!-- Navbar End -->
+  </div>
+</section>
 
 
-    <!-- Header Start -->
-    <div class="jumbotron jumbotron-fluid page-header position-relative overlay-bottom" style="margin-bottom: 90px;">
-        <div class="container text-center py-5">
-            <h1 class="text-white display-1">About</h1>
-            <div class="d-inline-flex text-white mb-5">
-                <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
-                <i class="fa fa-angle-double-right pt-1 px-3"></i>
-                <p class="m-0 text-uppercase">About</p>
-            </div>
-            <div class="mx-auto mb-5" style="width: 100%; max-width: 600px;">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-outline-light bg-white text-body px-4 dropdown-toggle" type="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Courses</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Courses 1</a>
-                            <a class="dropdown-item" href="#">Courses 2</a>
-                            <a class="dropdown-item" href="#">Courses 3</a>
-                        </div>
-                    </div>
-                    <input type="text" class="form-control border-light" style="padding: 30px 25px;" placeholder="Keyword">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary px-4 px-lg-5">Search</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+           <!-- SECTION Description 2 -->
+<section class="bg-white dark:bg-gray-900">
+  <div class="mx-auto max-w-screen-xl items-center gap-8 px-4 py-8 sm:py-16 md:grid md:grid-cols-2 lg:px-6 xl:gap-16">
+    <!-- Image -->
+    <img
+      class="w-full dark:hidden"
+      src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup.svg"
+      alt="Transformation numérique"
+    />
+    <img
+      class="hidden w-full dark:block"
+      src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup-dark.svg"
+      alt="Transformation numérique dark"
+    />
+
+    <!-- Texte -->
+    <div class="mt-4 md:mt-0">
+      <h2 class="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+        Des solutions numériques pour l’Afrique de demain
+      </h2>
+      <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
+        Chez <span class="font-semibold text-primary-600">DoucSoft</span>, nous croyons au pouvoir des technologies pour transformer 
+        la société africaine. À travers <span class="font-semibold">Forma Plus</span>, nous développons des compétences pratiques 
+        et innovantes, adaptées aux besoins du marché et aux défis de la transformation digitale.
+      </p>
+      <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
+        Du conseil stratégique aux formations en présentiel, nous accompagnons particuliers et entreprises
+        dans leur évolution vers un futur numérique durable et inclusif.
+      </p>
+
+      <!-- CTA -->
+      <a
+        href="/about"
+        class="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
+      >
+        En savoir plus
+        <svg class="-mr-1 ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </a>
     </div>
-    <!-- Header End -->
+  </div>
+</section>
 
 
-    <!-- About Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="row">
-                <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100" src="img/about.jpg" style="object-fit: cover;">
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="section-title position-relative mb-4">
-                        <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">About Us</h6>
-                        <h1 class="display-4">First Choice For Online Education Anywhere</h1>
-                    </div>
-                    <p>Tempor erat elitr at rebum at at clita aliquyam consetetur. Diam dolor diam ipsum et, tempor voluptua sit consetetur sit. Aliquyam diam amet diam et eos sadipscing labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor consetetur takimata eirmod, dolores takimata consetetur invidunt magna dolores aliquyam dolores dolore. Amet erat amet et magna</p>
-                    <div class="row pt-3 mx-0">
-                        <div class="col-3 px-0">
-                            <div class="bg-success text-center p-4">
-                                <h1 class="text-white" data-toggle="counter-up">123</h1>
-                                <h6 class="text-uppercase text-white">Available<span class="d-block">Subjects</span></h6>
-                            </div>
-                        </div>
-                        <div class="col-3 px-0">
-                            <div class="bg-primary text-center p-4">
-                                <h1 class="text-white" data-toggle="counter-up">1234</h1>
-                                <h6 class="text-uppercase text-white">Online<span class="d-block">Courses</span></h6>
-                            </div>
-                        </div>
-                        <div class="col-3 px-0">
-                            <div class="bg-secondary text-center p-4">
-                                <h1 class="text-white" data-toggle="counter-up">123</h1>
-                                <h6 class="text-uppercase text-white">Skilled<span class="d-block">Instructors</span></h6>
-                            </div>
-                        </div>
-                        <div class="col-3 px-0">
-                            <div class="bg-warning text-center p-4">
-                                <h1 class="text-white" data-toggle="counter-up">1234</h1>
-                                <h6 class="text-uppercase text-white">Happy<span class="d-block">Students</span></h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+
     </div>
-    <!-- About End -->
-
-
-    <!-- Feature Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="row">
-                <div class="col-lg-7 mb-5 mb-lg-0">
-                    <div class="section-title position-relative mb-4">
-                        <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Why Choose Us?</h6>
-                        <h1 class="display-4">Why You Should Start Learning with Us?</h1>
-                    </div>
-                    <p class="mb-4 pb-2">Aliquyam accusam clita nonumy ipsum sit sea clita ipsum clita, ipsum dolores amet voluptua duo dolores et sit ipsum rebum, sadipscing et erat eirmod diam kasd labore clita est. Diam sanctus gubergren sit rebum clita amet.</p>
-                    <div class="d-flex mb-3">
-                        <div class="btn-icon bg-primary mr-4">
-                            <i class="fa fa-2x fa-graduation-cap text-white"></i>
-                        </div>
-                        <div class="mt-n1">
-                            <h4>Skilled Instructors</h4>
-                            <p>Labore rebum duo est Sit dolore eos sit tempor eos stet, vero vero clita magna kasd no nonumy et eos dolor magna ipsum.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div class="btn-icon bg-secondary mr-4">
-                            <i class="fa fa-2x fa-certificate text-white"></i>
-                        </div>
-                        <div class="mt-n1">
-                            <h4>International Certificate</h4>
-                            <p>Labore rebum duo est Sit dolore eos sit tempor eos stet, vero vero clita magna kasd no nonumy et eos dolor magna ipsum.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="btn-icon bg-warning mr-4">
-                            <i class="fa fa-2x fa-book-reader text-white"></i>
-                        </div>
-                        <div class="mt-n1">
-                            <h4>Online Classes</h4>
-                            <p class="m-0">Labore rebum duo est Sit dolore eos sit tempor eos stet, vero vero clita magna kasd no nonumy et eos dolor magna ipsum.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5" style="min-height: 500px;">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100" src="img/feature.jpg" style="object-fit: cover;">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Feature Start -->
-
-
-    <!-- Footer Start -->
-    <div class="container-fluid position-relative overlay-top bg-dark text-white-50 py-5" style="margin-top: 90px;">
-        <div class="container mt-5 pt-5">
-            <div class="row">
-                <div class="col-md-6 mb-5">
-                    <a href="index.html" class="navbar-brand">
-                        <h1 class="mt-n2 text-uppercase text-white"><i class="fa fa-book-reader mr-3"></i>Edukate</h1>
-                    </a>
-                    <p class="m-0">Accusam nonumy clita sed rebum kasd eirmod elitr. Ipsum ea lorem at et diam est, tempor rebum ipsum sit ea tempor stet et consetetur dolores. Justo stet diam ipsum lorem vero clita diam</p>
-                </div>
-                <div class="col-md-6 mb-5">
-                    <h3 class="text-white mb-4">Newsletter</h3>
-                    <div class="w-100">
-                        <div class="input-group">
-                            <input type="text" class="form-control border-light" style="padding: 30px;" placeholder="Your Email Address">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary px-4">Sign Up</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 mb-5">
-                    <h3 class="text-white mb-4">Get In Touch</h3>
-                    <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA</p>
-                    <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
-                    <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
-                    <div class="d-flex justify-content-start mt-4">
-                        <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-twitter"></i></a>
-                        <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-facebook-f"></i></a>
-                        <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-linkedin-in"></i></a>
-                        <a class="text-white" href="#"><i class="fab fa-2x fa-instagram"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-5">
-                    <h3 class="text-white mb-4">Our Courses</h3>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Web Design</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Apps Design</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Marketing</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Research</a>
-                        <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>SEO</a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-5">
-                    <h3 class="text-white mb-4">Quick Links</h3>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Privacy Policy</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Terms & Condition</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Regular FAQs</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Help & Support</a>
-                        <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Contact</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid bg-dark text-white-50 border-top py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
-                    <p class="m-0">Copyright &copy; <a class="text-white" href="#">Your Site Name</a>. All Rights Reserved.
-                    </p>
-                </div>
-                <div class="col-md-6 text-center text-md-right">
-                    <p class="m-0">Designed by <a class="text-white" href="https://htmlcodex.com">HTML Codex</a> Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary rounded-0 btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    </ClientLayout>
 </template>

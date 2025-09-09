@@ -5,7 +5,8 @@
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
- @plugin "flowbite/plugin";
+@plugin "flowbite/plugin";
+@source "../../node_modules/flowbite";
 :root {
   --blue: #007bff;
   --indigo: #6610f2;

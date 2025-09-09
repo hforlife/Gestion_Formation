@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Formation;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -9,7 +10,10 @@ class SiteController extends Controller
 {
     //Page d'accueil
     public function home(){
-        return Inertia::render('site/index');
+        $formation = Formation::latest()->take(6)->get();
+        return Inertia::render('site/index', [
+            'formations' => $formation
+        ]);
     }
 
     //Page des formations

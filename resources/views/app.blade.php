@@ -45,12 +45,13 @@
     @inertia
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/asset/lib/easing/easing.min.js"></script>
     <script src="/asset/lib/waypoints/waypoints.min.js"></script>
     <script src="/asset/lib/counterup/counterup.min.js"></script>
     <script src="/asset/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="/asset/js/main.js"></script>

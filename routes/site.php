@@ -14,7 +14,3 @@ Route::get('/detail', [SiteController::class,'detail'])->name('detail');
 Route::get('/about', [SiteController::class,'about'])->name('about');
 
 Route::get('/contact', [SiteController::class,'contact'])->name('contact');
-
-
-
-?>

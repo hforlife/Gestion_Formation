@@ -52,7 +52,7 @@ class EtudiantController extends Controller
             'telephone' => 'required|string|max:255',
             'adresse' => 'required|string|max:255',
             'profession' => 'required|string|max:255',
-            'formation_id' => 'required|exists:formation_id',
+            'formation_id' => 'required|exists:formations,id',
             'inscription_date' => 'required|date',
             'status' => 'required',
         ]);

@@ -1,661 +1,328 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import ClientLayout from '@/layouts/ClientLayout.vue';
+import { about, contact, course, home, detail } from '@/routes';
+import { Link } from '@inertiajs/vue3';
+
+const props = defineProps<{
+  formations: Array<{
+    id: number;
+    title: string;
+    description: string;
+    prix: number;
+    image?: string;
+    logo_formation?: string;
+  }>;
+}>();
 </script>
 
+
 <template>
-    <Head title="Welcome">
-        <link rel="preconnect" href="https://fonts.bunny.net" />
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
-
-        <!-- Font Awesome -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
-
-        <!-- Libraries Stylesheet -->
-        <link href="/asset/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
-
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="/asset/css/style.css" rel="stylesheet" />
-    </Head>
-
-    <!-- Topbar Start -->
-    <div class="container-fluid bg-dark">
-        <div class="row px-lg-5 py-2">
-            <div class="col-lg-6 text-lg-left mb-lg-0 mb-2 text-center">
-                <div class="d-inline-flex align-items-center text-white">
-                    <small><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</small>
-                    <small class="px-3">|</small>
-                    <small><i class="fa fa-envelope mr-2"></i>info@example.com</small>
-                </div>
-            </div>
-            <div class="col-lg-6 text-lg-right text-center">
-                <div class="d-inline-flex align-items-center">
-                    <a class="px-2 text-white" href="">
-                        <i class="fab fa-facebook-f"></i>
+    <ClientLayout>
+        <!-- 🌐 NAVBAR + 🎯 HERO -->
+        <div class="bg-white text-gray-800">
+            <!-- 🎯 HERO -->
+            <section class="bg-white dark:bg-gray-900">
+                <div class="mx-auto max-w-screen-xl px-4 py-12 text-center lg:px-12 lg:py-20">
+                    <!-- Badge -->
+                    <a
+                        href="#"
+                        class="mb-7 inline-flex items-center justify-between rounded-full bg-gray-100 px-1 py-1 pr-4 text-sm text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+                        role="alert"
+                    >
+                        <span class="mr-3 rounded-full bg-primary-600 px-4 py-1.5 text-xs text-white">Forma Plus</span>
+                        <span class="text-sm font-medium">by Doucsoft — Votre partenaire numérique</span>
                     </a>
-                    <a class="px-2 text-white" href="">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="px-2 text-white" href="">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a class="px-2 text-white" href="">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a class="pl-2 text-white" href="">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
 
-    <!-- Navbar Start -->
-    <div class="container-fluid p-0">
-        <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 bg-white py-3">
-            <a href="index.html" class="navbar-brand ml-lg-3">
-                <h1 class="text-uppercase m-0 text-primary"><i class="fa fa-book-reader mr-3"></i>Edukate</h1>
-            </a>
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse justify-content-between px-lg-3 collapse" id="navbarCollapse">
-                <div class="navbar-nav mx-auto py-0">
-                    <Link href="index.html" class="nav-item nav-link active">Home</Link>
-                    <Link href="about.html" class="nav-item nav-link">About</Link>
-                    <Link href="course.html" class="nav-item nav-link">Courses</Link>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="detail.html" class="dropdown-item">Course Detail</a>
-                            <a href="feature.html" class="dropdown-item">Our Features</a>
-                            <a href="team.html" class="dropdown-item">Instructors</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        </div>
-                    </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-                </div>
-                <a href="" class="btn btn-primary d-none d-lg-block px-4 py-2">Join Us</a>
-            </div>
-        </nav>
-    </div>
-    <!-- Navbar End -->
+                    <!-- Titre -->
+                    <h1 class="mb-6 text-4xl leading-tight font-extrabold tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                        Bienvenue sur <span class="text-primary-600">Forma Plus</span>
+                    </h1>
 
-    <!-- Header Start -->
-    <div class="jumbotron jumbotron-fluid position-relative overlay-bottom" style="margin-bottom: 90px">
-        <div class="container my-5 py-5 text-center">
-            <h1 class="mt-4 mb-4 text-white">Learn From Home</h1>
-            <h1 class="display-1 mb-5 text-white">Education Courses</h1>
-            <div class="mx-auto mb-5" style="width: 100%; max-width: 600px">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <button
-                            class="btn btn-outline-light text-body dropdown-toggle bg-white px-4"
-                            type="button"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
+                    <!-- Sous-texte -->
+                    <p class="mb-8 text-lg font-normal text-gray-600 sm:px-16 lg:text-xl xl:px-48 dark:text-gray-400">
+                        Votre partenaire privilégié pour la formation en présentiel et l’accompagnement numérique. DoucSoft, entreprise de services
+                        numériques basée au Mali, ambitionne de se hisser parmi les leaders de la révolution digitale en Afrique.
+                    </p>
+
+                    <!-- CTA -->
+                    <div class="mb-10 flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                        <Link
+                                    :href="course.url()"
+                            class="inline-flex items-center justify-center rounded-lg bg-primary-700 px-6 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
                         >
-                            Courses
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Courses 1</a>
-                            <a class="dropdown-item" href="#">Courses 2</a>
-                            <a class="dropdown-item" href="#">Courses 3</a>
-                        </div>
-                    </div>
-                    <input type="text" class="form-control border-light" style="padding: 30px 25px" placeholder="Keyword" />
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary px-lg-5 px-4">Search</button>
+                            Découvrir nos formations
+                            <svg class="-mr-1 ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"
+                                ></path>
+                            </svg>
+                        </Link>
+                        <Link
+                                    :href="about.url()"
+                            class="inline-flex items-center justify-center rounded-lg border border-gray-300 px-6 py-3 text-center text-base font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                        >
+                            En savoir plus
+                    </Link>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- Header End -->
+            </section>
 
-    <!-- About Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="row">
-                <div class="col-lg-5 mb-lg-0 mb-5" style="min-height: 500px">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute h-100 w-100" src="img/about.jpg" style="object-fit: cover" />
+            <!-- SECTION Description -->
+            <section class="bg-gray-50 py-8 antialiased md:py-12 dark:bg-gray-900">
+                <div class="mx-auto max-w-screen-xl items-center gap-16 px-4 py-8 lg:grid lg:grid-cols-2 lg:px-6 lg:py-16">
+                    <!-- Texte -->
+                    <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+                        <h2 class="mb-6 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">Forma Plus by Doucsoft</h2>
+                        <p class="mb-4">
+                            Bienvenue sur Forma Plus, votre partenaire privilégié pour la formation en présentiel et l’accompagnement numérique.
+                            DoucSoft est une entreprise de services numériques (ESN) basée au Mali, avec une ambition forte : se hisser parmi les
+                            leaders de la révolution digitale en Afrique.
+                        </p>
+                        <p class="mb-4">
+                            Nous sommes spécialisés dans le conseil, les services informatiques et la transformation numérique. Grâce à notre
+                            expertise dans les technologies modernes telles que le cloud, le digital et les plateformes, nous permettons à nos clients
+                            de se positionner en avant-garde du développement numérique.
+                        </p>
+                        <p>
+                            Conscients des défis technologiques du continent africain, nous concevons des outils et services innovants pour améliorer
+                            l’accès et l’utilisation des technologies de l’information à travers l’Afrique.
+                        </p>
                     </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="section-title position-relative mb-4">
-                        <h6 class="d-inline-block position-relative text-uppercase pb-2 text-secondary">About Us</h6>
-                        <h1 class="display-4">First Choice For Online Education Anywhere</h1>
-                    </div>
-                    <p>
-                        Tempor erat elitr at rebum at at clita aliquyam consetetur. Diam dolor diam ipsum et, tempor voluptua sit consetetur sit.
-                        Aliquyam diam amet diam et eos sadipscing labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                        clita duo justo et tempor consetetur takimata eirmod, dolores takimata consetetur invidunt magna dolores aliquyam dolores
-                        dolore. Amet erat amet et magna
-                    </p>
-                    <div class="row mx-0 pt-3">
-                        <div class="col-3 px-0">
-                            <div class="bg-success p-4 text-center">
-                                <h1 class="text-white" data-toggle="counter-up">123</h1>
-                                <h6 class="text-uppercase text-white">Available<span class="d-block">Subjects</span></h6>
-                            </div>
-                        </div>
-                        <div class="col-3 px-0">
-                            <div class="bg-primary p-4 text-center">
-                                <h1 class="text-white" data-toggle="counter-up">1234</h1>
-                                <h6 class="text-uppercase text-white">Online<span class="d-block">Courses</span></h6>
-                            </div>
-                        </div>
-                        <div class="col-3 px-0">
-                            <div class="bg-secondary p-4 text-center">
-                                <h1 class="text-white" data-toggle="counter-up">123</h1>
-                                <h6 class="text-uppercase text-white">Skilled<span class="d-block">Instructors</span></h6>
-                            </div>
-                        </div>
-                        <div class="col-3 px-0">
-                            <div class="bg-warning p-4 text-center">
-                                <h1 class="text-white" data-toggle="counter-up">1234</h1>
-                                <h6 class="text-uppercase text-white">Happy<span class="d-block">Students</span></h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- About End -->
 
-    <!-- Feature Start -->
-    <div class="container-fluid bg-image" style="margin: 90px 0">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 pb-lg-5 my-5 pt-5">
-                    <div class="section-title position-relative mb-4">
-                        <h6 class="d-inline-block position-relative text-uppercase pb-2 text-secondary">Why Choose Us?</h6>
-                        <h1 class="display-4">Why You Should Start Learning with Us?</h1>
+                    <!-- Images -->
+                    <div class="mt-8 grid grid-cols-2 gap-4">
+                        <img
+                            class="w-full rounded-lg shadow"
+                            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png"
+                            alt="Formation en présentiel"
+                        />
+                        <img
+                            class="mt-4 w-full rounded-lg shadow lg:mt-10"
+                            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png"
+                            alt="Accompagnement numérique"
+                        />
                     </div>
-                    <p class="mb-4 pb-2">
-                        Aliquyam accusam clita nonumy ipsum sit sea clita ipsum clita, ipsum dolores amet voluptua duo dolores et sit ipsum rebum,
-                        sadipscing et erat eirmod diam kasd labore clita est. Diam sanctus gubergren sit rebum clita amet.
-                    </p>
-                    <div class="d-flex mb-3">
-                        <div class="btn-icon mr-4 bg-primary">
-                            <i class="fa fa-2x fa-graduation-cap text-white"></i>
+                </div>
+            </section>
+
+            <!-- SECTION Description 2 -->
+            <section class="bg-white dark:bg-gray-900">
+                <div class="mx-auto max-w-screen-xl items-center gap-8 px-4 py-8 sm:py-16 md:grid md:grid-cols-2 lg:px-6 xl:gap-16">
+                    <!-- Image -->
+                    <img
+                        class="w-full dark:hidden"
+                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup.svg"
+                        alt="Transformation numérique"
+                    />
+                    <img
+                        class="hidden w-full dark:block"
+                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup-dark.svg"
+                        alt="Transformation numérique dark"
+                    />
+
+                    <!-- Texte -->
+                    <div class="mt-4 md:mt-0">
+                        <h2 class="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+                            Des solutions numériques pour l’Afrique de demain
+                        </h2>
+                        <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
+                            Chez <span class="font-semibold text-primary-600">DoucSoft</span>, nous croyons au pouvoir des technologies pour
+                            transformer la société africaine. À travers <span class="font-semibold">Forma Plus</span>, nous développons des
+                            compétences pratiques et innovantes, adaptées aux besoins du marché et aux défis de la transformation digitale.
+                        </p>
+                        <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
+                            Du conseil stratégique aux formations en présentiel, nous accompagnons particuliers et entreprises dans leur évolution
+                            vers un futur numérique durable et inclusif.
+                        </p>
+
+                        <!-- CTA -->
+                        <a
+                            href="/about"
+                            class="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
+                        >
+                            En savoir plus
+                            <svg class="-mr-1 ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"
+                                ></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+<!-- SECTION Dernières Formations -->
+<section class="bg-gray-50 py-8 antialiased md:py-12 dark:bg-gray-900">
+  <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    <!-- Heading -->
+    <div class="mb-8 text-center">
+      <h2 class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
+        Nos dernières formations
+      </h2>
+      <p class="mt-2 text-gray-500 dark:text-gray-400">
+        Découvrez les 6 dernières formations ajoutées sur Forma Plus.
+      </p>
+    </div>
+
+    <!-- Grid formations -->
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        v-for="formation in props.formations"
+        :key="formation.id"
+        class="rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
+      >
+        <!-- Image -->
+        <div class="h-48 w-full overflow-hidden rounded-t-lg">
+          <img
+            :src="formation.logo_formation 
+              ? `/storage/${formation.logo_formation}` 
+              : '/images/default.png'"
+            :alt="formation.title"
+            class="h-full w-full object-cover"
+          />
+        </div>
+
+        <!-- Infos -->
+        <div class="p-5">
+          <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+            {{ formation.title }}
+          </h3>
+          <p class="mb-4 text-sm text-gray-700 dark:text-gray-400">
+            {{ formation.description }}
+          </p>
+          <p class="mb-4 text-xl font-bold text-primary-600">
+            {{ formation.prix }} FCFA
+          </p>
+
+          <!-- Bouton -->
+          <Link
+            :href="detail.url()"
+            class="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 focus:outline-none dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          >
+            Voir les détails
+          </Link>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+            <!-- 📩 CTA -->
+            <section class="bg-white dark:bg-gray-900">
+                <div class="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
+                    <!-- Titre -->
+                    <div class="mb-8 max-w-screen-md lg:mb-16">
+                        <h2 class="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">Nos domaines d’expertise</h2>
+                        <p class="text-gray-500 sm:text-xl dark:text-gray-400">
+                            Avec <span class="font-semibold text-primary-600">Forma Plus by Doucsoft</span>, nous allions formation, conseil et
+                            innovation pour bâtir une Afrique numérique plus compétitive et inclusive.
+                        </p>
+                    </div>
+
+                    <!-- Grille -->
+                    <div class="space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-3">
+                        <!-- Formation -->
+                        <div>
+                            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900">
+                                <svg class="h-6 w-6 text-primary-600 dark:text-primary-300" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 2L2 6l8 4 8-4-8-4zm0 7l-8-4v9a1 1 0 001 1h14a1 1 0 001-1V5l-8 4z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="mb-2 text-xl font-bold dark:text-white">Formation</h3>
+                            <p class="text-gray-500 dark:text-gray-400">
+                                Développez vos compétences grâce à nos formations en présentiel et en ligne, adaptées aux besoins du marché.
+                            </p>
                         </div>
-                        <div class="mt-n1">
-                            <h4>Skilled Instructors</h4>
-                            <p>
-                                Labore rebum duo est Sit dolore eos sit tempor eos stet, vero vero clita magna kasd no nonumy et eos dolor magna
-                                ipsum.
+
+                        <!-- Conseil & Services IT -->
+                        <div>
+                            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900">
+                                <svg class="h-6 w-6 text-primary-600 dark:text-primary-300" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M18 13a1 1 0 01-1 1h-1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3H3a1 1 0 01-1-1V7a1 1 0 011-1h1V3a1 1 0 011-1h10a1 1 0 011 1v3h1a1 1 0 011 1v6z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <h3 class="mb-2 text-xl font-bold dark:text-white">Conseil & Services IT</h3>
+                            <p class="text-gray-500 dark:text-gray-400">
+                                Nous accompagnons les entreprises dans la mise en place de solutions numériques performantes et sécurisées.
+                            </p>
+                        </div>
+
+                        <!-- Transformation numérique -->
+                        <div>
+                            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900">
+                                <svg class="h-6 w-6 text-primary-600 dark:text-primary-300" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4 3a1 1 0 00-1 1v2a1 1 0 001 1h1v2H4a1 1 0 000 2h1v2H4a1 1 0 000 2h1v2a1 1 0 001 1h2a1 1 0 001-1v-1h2v1a1 1 0 001 1h2a1 1 0 001-1v-2h1a1 1 0 000-2h-1v-2h1a1 1 0 000-2h-1V7h1a1 1 0 000-2h-1V4a1 1 0 00-1-1h-2a1 1 0 00-1 1v1H9V4a1 1 0 00-1-1H6a1 1 0 00-1 1v2H4z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <h3 class="mb-2 text-xl font-bold dark:text-white">Transformation numérique</h3>
+                            <p class="text-gray-500 dark:text-gray-400">
+                                Migration vers le cloud, digitalisation des processus et adoption de plateformes modernes.
+                            </p>
+                        </div>
+
+                        <!-- Innovation africaine -->
+                        <div>
+                            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900">
+                                <svg class="h-6 w-6 text-primary-600 dark:text-primary-300" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 8H9V5h2v5zm0 2H9v2h2v-2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="mb-2 text-xl font-bold dark:text-white">Innovation africaine</h3>
+                            <p class="text-gray-500 dark:text-gray-400">
+                                Des solutions pensées pour les réalités africaines, afin de relever les défis locaux par la technologie.
+                            </p>
+                        </div>
+
+                        <!-- Accessibilité -->
+                        <div>
+                            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900">
+                                <svg class="h-6 w-6 text-primary-600 dark:text-primary-300" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M18 10A8 8 0 112 10a8 8 0 0116 0zm-8-3a1 1 0 00-.867.5L8 10H6a1 1 0 000 2h2.382l1.724 2.447a1 1 0 001.732-1.094L10.618 12H12a1 1 0 000-2h-1.382l-1.105-1.553A1 1 0 0010 7z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <h3 class="mb-2 text-xl font-bold dark:text-white">Accessibilité</h3>
+                            <p class="text-gray-500 dark:text-gray-400">
+                                Nous œuvrons pour démocratiser l’accès aux technologies de l’information à travers l’Afrique.
+                            </p>
+                        </div>
+
+                        <!-- Développement durable -->
+                        <div>
+                            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900">
+                                <svg class="h-6 w-6 text-primary-600 dark:text-primary-300" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4 2a1 1 0 00-1 1v4c0 5.523 4.477 10 10 10h4a1 1 0 001-1v-4c0-5.523-4.477-10-10-10H4zm6 2a8 8 0 018 8h-2a6 6 0 00-6-6V4z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <h3 class="mb-2 text-xl font-bold dark:text-white">Développement durable</h3>
+                            <p class="text-gray-500 dark:text-gray-400">
+                                Nos solutions s’inscrivent dans une vision de croissance inclusive, durable et respectueuse des communautés.
                             </p>
                         </div>
                     </div>
-                    <div class="d-flex mb-3">
-                        <div class="btn-icon mr-4 bg-secondary">
-                            <i class="fa fa-2x fa-certificate text-white"></i>
-                        </div>
-                        <div class="mt-n1">
-                            <h4>International Certificate</h4>
-                            <p>
-                                Labore rebum duo est Sit dolore eos sit tempor eos stet, vero vero clita magna kasd no nonumy et eos dolor magna
-                                ipsum.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="btn-icon bg-warning mr-4">
-                            <i class="fa fa-2x fa-book-reader text-white"></i>
-                        </div>
-                        <div class="mt-n1">
-                            <h4>Online Classes</h4>
-                            <p class="m-0">
-                                Labore rebum duo est Sit dolore eos sit tempor eos stet, vero vero clita magna kasd no nonumy et eos dolor magna
-                                ipsum.
-                            </p>
-                        </div>
-                    </div>
                 </div>
-                <div class="col-lg-5" style="min-height: 500px">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute h-100 w-100" src="img/feature.jpg" style="object-fit: cover" />
-                    </div>
-                </div>
-            </div>
+            </section>
         </div>
-    </div>
-    <!-- Feature Start -->
-
-    <!-- Courses Start -->
-    <div class="container-fluid px-0 py-5">
-        <div class="row justify-content-center mx-0 pt-5">
-            <div class="col-lg-6">
-                <div class="section-title position-relative mb-4 text-center">
-                    <h6 class="d-inline-block position-relative text-uppercase pb-2 text-secondary">Our Courses</h6>
-                    <h1 class="display-4">Checkout New Releases Of Our Courses</h1>
-                </div>
-            </div>
-        </div>
-        <div class="owl-carousel courses-carousel">
-            <div class="courses-item position-relative">
-                <img class="img-fluid" src="img/courses-1.jpg" alt="" />
-                <div class="courses-text">
-                    <h4 class="px-3 text-center text-white">Web design & development courses for beginners</h4>
-                    <div class="border-top mt-3 w-100">
-                        <div class="d-flex justify-content-between p-4">
-                            <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                            <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
-                        </div>
-                    </div>
-                    <div class="w-100 bg-white p-4 text-center">
-                        <a class="btn btn-primary" href="detail.html">Course Detail</a>
-                    </div>
-                </div>
-            </div>
-            <div class="courses-item position-relative">
-                <img class="img-fluid" src="img/courses-2.jpg" alt="" />
-                <div class="courses-text">
-                    <h4 class="px-3 text-center text-white">Web design & development courses for beginners</h4>
-                    <div class="border-top mt-3 w-100">
-                        <div class="d-flex justify-content-between p-4">
-                            <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                            <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
-                        </div>
-                    </div>
-                    <div class="w-100 bg-white p-4 text-center">
-                        <a class="btn btn-primary" href="detail.html">Course Detail</a>
-                    </div>
-                </div>
-            </div>
-            <div class="courses-item position-relative">
-                <img class="img-fluid" src="img/courses-3.jpg" alt="" />
-                <div class="courses-text">
-                    <h4 class="px-3 text-center text-white">Web design & development courses for beginners</h4>
-                    <div class="border-top mt-3 w-100">
-                        <div class="d-flex justify-content-between p-4">
-                            <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                            <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
-                        </div>
-                    </div>
-                    <div class="w-100 bg-white p-4 text-center">
-                        <a class="btn btn-primary" href="detail.html">Course Detail</a>
-                    </div>
-                </div>
-            </div>
-            <div class="courses-item position-relative">
-                <img class="img-fluid" src="img/courses-4.jpg" alt="" />
-                <div class="courses-text">
-                    <h4 class="px-3 text-center text-white">Web design & development courses for beginners</h4>
-                    <div class="border-top mt-3 w-100">
-                        <div class="d-flex justify-content-between p-4">
-                            <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                            <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
-                        </div>
-                    </div>
-                    <div class="w-100 bg-white p-4 text-center">
-                        <a class="btn btn-primary" href="detail.html">Course Detail</a>
-                    </div>
-                </div>
-            </div>
-            <div class="courses-item position-relative">
-                <img class="img-fluid" src="img/courses-5.jpg" alt="" />
-                <div class="courses-text">
-                    <h4 class="px-3 text-center text-white">Web design & development courses for beginners</h4>
-                    <div class="border-top mt-3 w-100">
-                        <div class="d-flex justify-content-between p-4">
-                            <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                            <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
-                        </div>
-                    </div>
-                    <div class="w-100 bg-white p-4 text-center">
-                        <a class="btn btn-primary" href="detail.html">Course Detail</a>
-                    </div>
-                </div>
-            </div>
-            <div class="courses-item position-relative">
-                <img class="img-fluid" src="img/courses-6.jpg" alt="" />
-                <div class="courses-text">
-                    <h4 class="px-3 text-center text-white">Web design & development courses for beginners</h4>
-                    <div class="border-top mt-3 w-100">
-                        <div class="d-flex justify-content-between p-4">
-                            <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                            <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
-                        </div>
-                    </div>
-                    <div class="w-100 bg-white p-4 text-center">
-                        <a class="btn btn-primary" href="detail.html">Course Detail</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center bg-image mx-0 mb-5">
-            <div class="col-lg-6 py-5">
-                <div class="my-5 bg-white p-5">
-                    <h1 class="mb-4 text-center">30% Off For New Students</h1>
-                    <form>
-                        <div class="form-row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control bg-light border-0" placeholder="Your Name" style="padding: 30px 20px" />
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input type="email" class="form-control bg-light border-0" placeholder="Your Email" style="padding: 30px 20px" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <select class="custom-select bg-light border-0 px-3" style="height: 60px">
-                                        <option selected>Select A courses</option>
-                                        <option value="1">courses 1</option>
-                                        <option value="2">courses 1</option>
-                                        <option value="3">courses 1</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <button class="btn btn-primary btn-block" type="submit" style="height: 60px">Sign Up Now</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Courses End -->
-
-    <!-- Team Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="section-title position-relative mb-5 text-center">
-                <h6 class="d-inline-block position-relative text-uppercase pb-2 text-secondary">Instructors</h6>
-                <h1 class="display-4">Meet Our Instructors</h1>
-            </div>
-            <div class="owl-carousel team-carousel position-relative" style="padding: 0 30px">
-                <div class="team-item">
-                    <img class="img-fluid w-100" src="img/team-1.jpg" alt="" />
-                    <div class="bg-light p-4 text-center">
-                        <h5 class="mb-3">Instructor Name</h5>
-                        <p class="mb-2">Web Design & Development</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-item">
-                    <img class="img-fluid w-100" src="img/team-2.jpg" alt="" />
-                    <div class="bg-light p-4 text-center">
-                        <h5 class="mb-3">Instructor Name</h5>
-                        <p class="mb-2">Web Design & Development</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-item">
-                    <img class="img-fluid w-100" src="img/team-3.jpg" alt="" />
-                    <div class="bg-light p-4 text-center">
-                        <h5 class="mb-3">Instructor Name</h5>
-                        <p class="mb-2">Web Design & Development</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-item">
-                    <img class="img-fluid w-100" src="img/team-4.jpg" alt="" />
-                    <div class="bg-light p-4 text-center">
-                        <h5 class="mb-3">Instructor Name</h5>
-                        <p class="mb-2">Web Design & Development</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Team End -->
-
-    <!-- Testimonial Start -->
-    <div class="container-fluid bg-image py-5" style="margin: 90px 0">
-        <div class="container py-5">
-            <div class="row align-items-center">
-                <div class="col-lg-5 mb-lg-0 mb-5">
-                    <div class="section-title position-relative mb-4">
-                        <h6 class="d-inline-block position-relative text-uppercase pb-2 text-secondary">Testimonial</h6>
-                        <h1 class="display-4">What Say Our Students</h1>
-                    </div>
-                    <p class="m-0">
-                        Dolor est dolores et nonumy sit labore dolores est sed rebum amet, justo duo ipsum sanctus dolore magna rebum sit et. Diam
-                        lorem ea sea at. Nonumy et at at sed justo est nonumy tempor. Vero sea ea eirmod, elitr ea amet diam ipsum at amet. Erat sed
-                        stet eos ipsum diam
-                    </p>
-                </div>
-                <div class="col-lg-7">
-                    <div class="owl-carousel testimonial-carousel">
-                        <div class="bg-white p-5">
-                            <i class="fa fa-3x fa-quote-left mb-4 text-primary"></i>
-                            <p>
-                                Sed et elitr ipsum labore dolor diam, ipsum duo vero sed sit est est ipsum eos clita est ipsum. Est nonumy tempor at
-                                kasd. Sed at dolor duo ut dolor, et justo erat dolor magna sed stet amet elitr duo lorem
-                            </p>
-                            <div class="d-flex align-items-center mt-4 flex-shrink-0">
-                                <img class="img-fluid mr-4" src="img/testimonial-2.jpg" alt="" />
-                                <div>
-                                    <h5>Student Name</h5>
-                                    <span>Web Design</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-white p-5">
-                            <i class="fa fa-3x fa-quote-left mb-4 text-primary"></i>
-                            <p>
-                                Sed et elitr ipsum labore dolor diam, ipsum duo vero sed sit est est ipsum eos clita est ipsum. Est nonumy tempor at
-                                kasd. Sed at dolor duo ut dolor, et justo erat dolor magna sed stet amet elitr duo lorem
-                            </p>
-                            <div class="d-flex align-items-center mt-4 flex-shrink-0">
-                                <img class="img-fluid mr-4" src="img/testimonial-1.jpg" alt="" />
-                                <div>
-                                    <h5>Student Name</h5>
-                                    <span>Web Design</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Testimonial Start -->
-
-    <!-- Contact Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="row align-items-center">
-                <div class="col-lg-5 mb-lg-0 mb-5">
-                    <div class="bg-light d-flex flex-column justify-content-center px-5" style="height: 450px">
-                        <div class="d-flex align-items-center mb-5">
-                            <div class="btn-icon mr-4 bg-primary">
-                                <i class="fa fa-2x fa-map-marker-alt text-white"></i>
-                            </div>
-                            <div class="mt-n1">
-                                <h4>Our Location</h4>
-                                <p class="m-0">123 Street, New York, USA</p>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center mb-5">
-                            <div class="btn-icon mr-4 bg-secondary">
-                                <i class="fa fa-2x fa-phone-alt text-white"></i>
-                            </div>
-                            <div class="mt-n1">
-                                <h4>Call Us</h4>
-                                <p class="m-0">+012 345 6789</p>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="btn-icon bg-warning mr-4">
-                                <i class="fa fa-2x fa-envelope text-white"></i>
-                            </div>
-                            <div class="mt-n1">
-                                <h4>Email Us</h4>
-                                <p class="m-0">info@example.com</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="section-title position-relative mb-4">
-                        <h6 class="d-inline-block position-relative text-uppercase pb-2 text-secondary">Need Help?</h6>
-                        <h1 class="display-4">Send Us A Message</h1>
-                    </div>
-                    <div class="contact-form">
-                        <form>
-                            <div class="row">
-                                <div class="form-group col-6">
-                                    <input
-                                        type="text"
-                                        class="form-control border-top-0 border-right-0 border-left-0 p-0"
-                                        placeholder="Your Name"
-                                        required
-                                    />
-                                </div>
-                                <div class="form-group col-6">
-                                    <input
-                                        type="email"
-                                        class="form-control border-top-0 border-right-0 border-left-0 p-0"
-                                        placeholder="Your Email"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input
-                                    type="text"
-                                    class="form-control border-top-0 border-right-0 border-left-0 p-0"
-                                    placeholder="Subject"
-                                    required
-                                />
-                            </div>
-                            <div class="form-group">
-                                <textarea
-                                    class="form-control border-top-0 border-right-0 border-left-0 p-0"
-                                    rows="5"
-                                    placeholder="Message"
-                                    required
-                                ></textarea>
-                            </div>
-                            <div>
-                                <button class="btn btn-primary px-5 py-3" type="submit">Send Message</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Contact End -->
-
-    <!-- Footer Start -->
-    <div class="container-fluid position-relative overlay-top bg-dark text-white-50 py-5" style="margin-top: 90px">
-        <div class="container mt-5 pt-5">
-            <div class="row">
-                <div class="col-md-6 mb-5">
-                    <a href="index.html" class="navbar-brand">
-                        <h1 class="mt-n2 text-uppercase text-white"><i class="fa fa-book-reader mr-3"></i>Edukate</h1>
-                    </a>
-                    <p class="m-0">
-                        Accusam nonumy clita sed rebum kasd eirmod elitr. Ipsum ea lorem at et diam est, tempor rebum ipsum sit ea tempor stet et
-                        consetetur dolores. Justo stet diam ipsum lorem vero clita diam
-                    </p>
-                </div>
-                <div class="col-md-6 mb-5">
-                    <h3 class="mb-4 text-white">Newsletter</h3>
-                    <div class="w-100">
-                        <div class="input-group">
-                            <input type="text" class="form-control border-light" style="padding: 30px" placeholder="Your Email Address" />
-                            <div class="input-group-append">
-                                <button class="btn btn-primary px-4">Sign Up</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 mb-5">
-                    <h3 class="mb-4 text-white">Get In Touch</h3>
-                    <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA</p>
-                    <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
-                    <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
-                    <div class="d-flex justify-content-start mt-4">
-                        <a class="mr-4 text-white" href="#"><i class="fab fa-2x fa-twitter"></i></a>
-                        <a class="mr-4 text-white" href="#"><i class="fab fa-2x fa-facebook-f"></i></a>
-                        <a class="mr-4 text-white" href="#"><i class="fab fa-2x fa-linkedin-in"></i></a>
-                        <a class="text-white" href="#"><i class="fab fa-2x fa-instagram"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-5">
-                    <h3 class="mb-4 text-white">Our Courses</h3>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Web Design</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Apps Design</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Marketing</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Research</a>
-                        <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>SEO</a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-5">
-                    <h3 class="mb-4 text-white">Quick Links</h3>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Privacy Policy</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Terms & Condition</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Regular FAQs</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Help & Support</a>
-                        <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Contact</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid bg-dark text-white-50 border-top py-4" style="border-color: rgba(256, 256, 256, 0.1) !important">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 text-md-left mb-md-0 mb-3 text-center">
-                    <p class="m-0">Copyright &copy; <a class="text-white" href="#">Your Site Name</a>. All Rights Reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-right text-center">
-                    <p class="m-0">
-                        Designed by <a class="text-white" href="https://htmlcodex.com">HTML Codex</a> Distributed by
-                        <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary rounded-0 btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    </ClientLayout>
 </template>
