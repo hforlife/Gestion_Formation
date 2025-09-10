@@ -20,6 +20,10 @@ const form = useForm({
     description: '',
     start_date: '',
     end_date: '',
+    price: '',
+    quota: '',
+    location: '',
+    duration: '',
     user_id: '',
     image: null, // initialiser à null
     logo_formation: null, // initialiser à null
@@ -104,6 +108,34 @@ function submitForm() {
                         <label for="end_date" class="block font-medium capitalize"> Date de fin </label>
                         <Input type="date" v-model="form.end_date" required />
                         <span v-if="form.errors.end_date" class="text-sm text-red-600"> {{ form.errors.end_date }} </span>
+                    </div>
+
+                    <!-- Prix -->
+                    <div class="space-y-2">
+                        <label for="price" class="block font-medium capitalize"> Prix (en FCFA) </label>
+                        <Input type="number" v-model="form.price" placeholder="100000" min="0" required />
+                        <span v-if="form.errors.price" class="text-sm text-red-600"> {{ form.errors.price }} </span>
+                    </div>
+
+                    <!-- Quota -->
+                    <div class="space-y-2">
+                        <label for="quota" class="block font-medium capitalize"> Quota </label>
+                        <Input type="number" v-model="form.quota" placeholder="50" min="1" required />
+                        <span v-if="form.errors.quota" class="text-sm text-red-600"> {{ form.errors.quota }} </span>
+                    </div>
+
+                    <!-- Lieu -->
+                    <div class="space-y-2">
+                        <label for="location" class="block font-medium capitalize"> Lieu </label>
+                        <Input type="text" v-model="form.location" placeholder="Bamako, Mali" required />
+                        <span v-if="form.errors.location" class="text-sm text-red-600"> {{ form.errors.location }} </span>
+                    </div>
+
+                    <!-- Durée -->
+                    <div class="space-y-2">
+                        <label for="duration" class="block font-medium capitalize"> Durée (en heures) </label>
+                        <Input type="number" v-model="form.duration" placeholder="40" min="1" required />
+                        <span v-if="form.errors.duration" class="text-sm text-red-600"> {{ form.errors.duration }} </span>
                     </div>
 
                     <!-- Formateur -->

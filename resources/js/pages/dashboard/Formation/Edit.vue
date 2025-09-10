@@ -19,6 +19,10 @@ const props = defineProps<{
         description: string;
         start_date: string;
         end_date: string;
+        price: number;
+        quota: number;
+        location: string;
+        duration: string;
         user_id: number;
         image: string;
         logo_formation: string;
@@ -31,6 +35,10 @@ const form = useForm({
     description: props.formation.description || '',
     start_date: props.formation.start_date || '',
     end_date: props.formation.end_date || '',
+    price: props.formation.price.toString() || '',
+    quota: props.formation.quota.toString() || '',
+    location: props.formation.location || '',
+    duration: props.formation.duration || '',
     user_id: props.formation.user_id.toString() || '',
     image: null as File | null,
     logo_formation: null as File | null,
@@ -124,6 +132,34 @@ function submitForm() {
                         <label class="block font-medium capitalize">Date de fin</label>
                         <Input type="date" v-model="form.end_date" />
                         <span v-if="form.errors.end_date" class="text-sm text-red-600">{{ form.errors.end_date }}</span>
+                    </div>
+
+                    <!-- Prix -->
+                    <div class="space-y-2">
+                        <label for="price" class="block font-medium capitalize"> Prix (en FCFA) </label>
+                        <Input type="number" v-model="form.price" placeholder="100000" min="0" required />
+                        <span v-if="form.errors.price" class="text-sm text-red-600"> {{ form.errors.price }} </span>
+                    </div>
+
+                    <!-- Quota -->
+                    <div class="space-y-2">
+                        <label for="quota" class="block font-medium capitalize"> Quota </label>
+                        <Input type="number" v-model="form.quota" placeholder="50" min="1" required />
+                        <span v-if="form.errors.quota" class="text-sm text-red-600"> {{ form.errors.quota }} </span>
+                    </div>
+
+                    <!-- Lieu -->
+                    <div class="space-y-2">
+                        <label for="location" class="block font-medium capitalize"> Lieu </label>
+                        <Input type="text" v-model="form.location" placeholder="Bamako, Mali" required />
+                        <span v-if="form.errors.location" class="text-sm text-red-600"> {{ form.errors.location }} </span>
+                    </div>
+
+                    <!-- Durée -->
+                    <div class="space-y-2">
+                        <label for="duration" class="block font-medium capitalize"> Durée (en heures) </label>
+                        <Input type="number" v-model="form.duration" placeholder="40" min="1" required />
+                        <span v-if="form.errors.duration" class="text-sm text-red-600"> {{ form.errors.duration }} </span>
                     </div>
 
                     <!-- Formateur -->

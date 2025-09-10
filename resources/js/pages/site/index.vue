@@ -1,20 +1,35 @@
 <script setup lang="ts">
 import ClientLayout from '@/layouts/ClientLayout.vue';
-import { about, contact, course, home, detail } from '@/routes';
+import { about, course } from '@/routes';
+import { detail } from '@/routes';
 import { Link } from '@inertiajs/vue3';
 
 const props = defineProps<{
-  formations: Array<{
-    id: number;
-    title: string;
-    description: string;
-    prix: number;
-    image?: string;
-    logo_formation?: string;
-  }>;
+    formations: Array<{
+        id: number;
+        title: string;
+        description: string;
+        start_date: string;
+        end_date: string;
+        price: number;
+        image?: string;
+        logo_formation?: string;
+    }>;
 }>();
-</script>
 
+const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('fr-FR', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+    });
+};
+
+const truncate = (text: string, length: number) => {
+    if (!text) return '';
+    return text.length > length ? text.substring(0, length) + '...' : text;
+};
+</script>
 
 <template>
     <ClientLayout>
@@ -47,7 +62,7 @@ const props = defineProps<{
                     <!-- CTA -->
                     <div class="mb-10 flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
                         <Link
-                                    :href="course.url()"
+                            :href="course.url()"
                             class="inline-flex items-center justify-center rounded-lg bg-primary-700 px-6 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
                         >
                             Découvrir nos formations
@@ -60,17 +75,17 @@ const props = defineProps<{
                             </svg>
                         </Link>
                         <Link
-                                    :href="about.url()"
+                            :href="about.url()"
                             class="inline-flex items-center justify-center rounded-lg border border-gray-300 px-6 py-3 text-center text-base font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800"
                         >
                             En savoir plus
-                    </Link>
+                        </Link>
                     </div>
                 </div>
             </section>
 
             <!-- SECTION Description -->
-            <section class="bg-gray-50 py-8 antialiased md:py-12 dark:bg-gray-900">
+            <section class="bg-white dark:bg-gray-900">
                 <div class="mx-auto max-w-screen-xl items-center gap-16 px-4 py-8 lg:grid lg:grid-cols-2 lg:px-6 lg:py-16">
                     <!-- Texte -->
                     <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
@@ -93,16 +108,7 @@ const props = defineProps<{
 
                     <!-- Images -->
                     <div class="mt-8 grid grid-cols-2 gap-4">
-                        <img
-                            class="w-full rounded-lg shadow"
-                            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png"
-                            alt="Formation en présentiel"
-                        />
-                        <img
-                            class="mt-4 w-full rounded-lg shadow lg:mt-10"
-                            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png"
-                            alt="Accompagnement numérique"
-                        />
+                        <img class="rounded-lg" style="max-width: 350px" src="asset/img/logo_formaplus.png" alt="Formation en présentiel" />
                     </div>
                 </div>
             </section>
@@ -112,14 +118,8 @@ const props = defineProps<{
                 <div class="mx-auto max-w-screen-xl items-center gap-8 px-4 py-8 sm:py-16 md:grid md:grid-cols-2 lg:px-6 xl:gap-16">
                     <!-- Image -->
                     <img
-                        class="w-full dark:hidden"
-                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup.svg"
+                        src="/asset/img/sopafer.jpeg"
                         alt="Transformation numérique"
-                    />
-                    <img
-                        class="hidden w-full dark:block"
-                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup-dark.svg"
-                        alt="Transformation numérique dark"
                     />
 
                     <!-- Texte -->
@@ -155,63 +155,71 @@ const props = defineProps<{
                 </div>
             </section>
 
-<!-- SECTION Dernières Formations -->
-<section class="bg-gray-50 py-8 antialiased md:py-12 dark:bg-gray-900">
-  <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-    <!-- Heading -->
-    <div class="mb-8 text-center">
-      <h2 class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
-        Nos dernières formations
-      </h2>
-      <p class="mt-2 text-gray-500 dark:text-gray-400">
-        Découvrez les 6 dernières formations ajoutées sur Forma Plus.
-      </p>
-    </div>
+            <!-- SECTION Dernières Formations -->
+            <section class="bg-gray-50 py-8 antialiased md:py-12 dark:bg-gray-900">
+                <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+                    <!-- Heading -->
+                    <div class="mb-8 text-center">
+                        <h2 class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">Nos dernières formations</h2>
+                        <p class="mt-2 text-gray-500 dark:text-gray-400">Découvrez les 6 dernières formations ajoutées sur Forma Plus.</p>
+                    </div>
 
-    <!-- Grid formations -->
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <div
-        v-for="formation in props.formations"
-        :key="formation.id"
-        class="rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
-      >
-        <!-- Image -->
-        <div class="h-48 w-full overflow-hidden rounded-t-lg">
-          <img
-            :src="formation.logo_formation 
-              ? `/storage/${formation.logo_formation}` 
-              : '/images/default.png'"
-            :alt="formation.title"
-            class="h-full w-full object-cover"
-          />
-        </div>
+                    <!-- Grid formations -->
+                    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        <div
+                            v-for="formation in props.formations"
+                            :key="formation.id"
+                            class="rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
+                        >
+                            <!-- Image -->
+                            <div class="h-48 w-full overflow-hidden rounded-t-lg">
+                                <img
+                                    :src="formation.logo_formation ? `/storage/${formation.logo_formation}` : '/images/default.png'"
+                                    :alt="formation.title"
+                                    class="h-full w-full object-cover"
+                                />
+                            </div>
 
-        <!-- Infos -->
-        <div class="p-5">
-          <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-            {{ formation.title }}
-          </h3>
-          <p class="mb-4 text-sm text-gray-700 dark:text-gray-400">
-            {{ formation.description }}
-          </p>
-          <p class="mb-4 text-xl font-bold text-primary-600">
-            {{ formation.prix }} FCFA
-          </p>
+                            <!-- Infos -->
+                            <div class="p-5">
+                                <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+                                    {{ formation.title }}
+                                </h3>
 
-          <!-- Bouton -->
-          <Link
-            :href="detail.url()"
-            class="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 focus:outline-none dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-          >
-            Voir les détails
-          </Link>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+                                <!-- Description raccourcie -->
+                                <p class="mb-4 text-sm text-gray-700 dark:text-gray-400">
+                                    {{ truncate(formation.description, 120) }}
+                                </p>
 
+                                <!-- Prix -->
+                                <p class="mb-4 text-xl font-bold text-primary-600">{{ formation.price }} FCFA</p>
 
+                                <!-- Ligne date + bouton -->
+                                <div class="flex items-center justify-between">
+                                    <p class="text-sm text-primary-600 dark:text-gray-400">
+                                        {{ formatDate(formation.start_date) }}
+                                    </p>
+
+                                    <Link
+                                        :href="detail.url({ id: formation.id })"
+                                        class="inline-flex items-center justify-center rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 focus:outline-none dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                    >
+                                        Voir les détails
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full text-center items-center">
+                            <button
+                                type="button"
+                                class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+                            >
+                                Voir Plus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <!-- 📩 CTA -->
             <section class="bg-white dark:bg-gray-900">

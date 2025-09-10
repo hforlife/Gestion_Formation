@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('formations', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->string('logo_formation')->nullable();
+            $table->decimal('price', 8, 2)->nullable();
+            $table->integer('quota')->nullable();
+            $table->string('location')->nullable();
+            $table->string('duration')->nullable();
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

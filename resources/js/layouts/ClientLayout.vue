@@ -1,6 +1,23 @@
 <script setup>
-import { about, contact, course, home, login } from '@/routes';
+import { about, contact, course, home } from '@/routes';
 import { Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+// Utilisez le hook usePage pour accéder aux propriétés de la page courante
+import { usePage } from '@inertiajs/vue3';
+
+const page = usePage();
+
+// Fonction pour vérifier si un lien est actif
+const isActiveLink = (path) => {
+  return page.url === path || page.url.startsWith(path + '/');
+};
+
+// Fonctions calculées pour chaque route
+const isHomeActive = computed(() => isActiveLink(home.url()));
+const isCourseActive = computed(() => isActiveLink(course.url()));
+const isAboutActive = computed(() => isActiveLink(about.url()));
+const isContactActive = computed(() => isActiveLink(contact.url()));
 </script>
 
 <template>
@@ -10,19 +27,19 @@ import { Link } from '@inertiajs/vue3';
             <nav class="border-gray-200 bg-white px-4 py-2.5 lg:px-6 dark:bg-gray-800">
                 <div class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
                     <Link :href="home.url()" class="flex items-center">
-                        <img src="asset/img/logo_formaplus.png" class="mr-3 h-6 sm:h-9" alt="Forma Plus Logo" />
+                        <img src="/asset/img/logo_formaplus.png" class="mr-3 h-6 sm:h-9" alt="Forma Plus Logo" />
                         <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Forma Plus</span>
                     </Link>
                     <div class="flex items-center lg:order-2">
                         <Link
                             :href="contact.url()"
-                            class="mr-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 focus:outline-none lg:px-5 lg:py-2.5 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-                            >Contact</Link
-                        >
-                        <Link
-                            :href="course.url()"
-                            class="mr-2 rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 focus:outline-none lg:px-5 lg:py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                            >Commencer</Link
+                            :class="[
+                                'mr-2 rounded-lg px-4 py-2 text-sm font-medium focus:ring-4 focus:outline-none lg:px-5 lg:py-2.5',
+                                isContactActive 
+                                    ? 'bg-primary-800 text-white dark:bg-primary-700' 
+                                    : 'bg-primary-700 text-white hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
+                            ]"
+                            >Contactez-Nous</Link
                         >
                         <button
                             data-collapse-toggle="mobile-menu-2"
@@ -53,22 +70,39 @@ import { Link } from '@inertiajs/vue3';
                             <li>
                                 <Link
                                     :href="home.url()"
-                                    class="block rounded bg-primary-700 py-2 pr-4 pl-3 text-white lg:bg-transparent lg:p-0 lg:text-primary-700 dark:text-white"
-                                    aria-current="page"
+                                    :class="[
+                                        'block py-2 pr-4 pl-3 lg:p-0 lg:hover:bg-transparent',
+                                        isHomeActive
+                                            ? 'rounded bg-primary-700 text-white lg:bg-transparent lg:text-primary-700 dark:text-white'
+                                            : 'border-b border-gray-100 text-gray-700 hover:bg-gray-50 lg:border-0 lg:hover:text-primary-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white'
+                                    ]"
+                                    :aria-current="isHomeActive ? 'page' : undefined"
                                     >Accueil</Link
                                 >
                             </li>
                             <li>
                                 <Link
-                                href="#"
-                                class="block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-primary-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
-                                >Nos Formations</Link
+                                    :href="course.url()"
+                                    :class="[
+                                        'block py-2 pr-4 pl-3 lg:p-0 lg:hover:bg-transparent',
+                                        isCourseActive
+                                            ? 'rounded bg-primary-700 text-white lg:bg-transparent lg:text-primary-700 dark:text-white'
+                                            : 'border-b border-gray-100 text-gray-700 hover:bg-gray-50 lg:border-0 lg:hover:text-primary-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white'
+                                    ]"
+                                    :aria-current="isCourseActive ? 'page' : undefined"
+                                    >Nos Formations</Link
                                 >
                             </li>
                             <li>
                                 <Link
                                     :href="about.url()"
-                                    class="block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-primary-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+                                    :class="[
+                                        'block py-2 pr-4 pl-3 lg:p-0 lg:hover:bg-transparent',
+                                        isAboutActive
+                                            ? 'rounded bg-primary-700 text-white lg:bg-transparent lg:text-primary-700 dark:text-white'
+                                            : 'border-b border-gray-100 text-gray-700 hover:bg-gray-50 lg:border-0 lg:hover:text-primary-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white'
+                                    ]"
+                                    :aria-current="isAboutActive ? 'page' : undefined"
                                     >A Propos</Link
                                 >
                             </li>
@@ -98,29 +132,59 @@ import { Link } from '@inertiajs/vue3';
                     </div>
 
                     <!-- Liens -->
-                    <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-6">
+                    <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-6">
                         <div>
                             <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Navigation</h2>
                             <ul class="text-gray-600 dark:text-gray-400">
-                                <li class="mb-4"><Link href="/about" class="hover:underline">À propos</Link></li>
-                                <li class="mb-4"><Link href="/courses" class="hover:underline">Formations</Link></li>
-                                <li><Link href="/contact" class="hover:underline">Contact</Link></li>
+                                <li class="mb-4">
+                                    <Link 
+                                        :href="about.url()" 
+                                        :class="['hover:underline', isAboutActive ? 'font-semibold text-primary-700' : '']"
+                                    >
+                                        À propos
+                                    </Link>
+                                </li>
+                                <li class="mb-4">
+                                    <Link 
+                                        :href="course.url()" 
+                                        :class="['hover:underline', isCourseActive ? 'font-semibold text-primary-700' : '']"
+                                    >
+                                        Formations
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link 
+                                        :href="contact.url()" 
+                                        :class="['hover:underline', isContactActive ? 'font-semibold text-primary-700' : '']"
+                                    >
+                                        Contact
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
 
                         <div>
-                            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Ressources</h2>
+                            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">DoucSoft Technologie</h2>
                             <ul class="text-gray-600 dark:text-gray-400">
-                                <li class="mb-4"><a href="https://tailwindcss.com/" target="_blank" class="hover:underline">Tailwind CSS</a></li>
-                                <li><a href="https://flowbite.com" target="_blank" class="hover:underline">Flowbite</a></li>
+                                <li class="mb-4">
+                                    <span class="block">📍 Bamako, Mali</span>
+                                    <span class="text-sm">Sotuba ACI, Immeuble Wafa Simpara (Telecel)</span>
+                                </li>
+                                <li class="mb-4">
+                                    <span class="block">📞 Secrétariat</span>
+                                    <a href="tel:+22320242672" class="hover:underline">+223 20 24 26 72</a>
+                                </li>
+                                <li>
+                                    <span class="block">✉️ Email</span>
+                                    <a href="mailto:contact@doucsoft.tech" class="hover:underline">contact@doucsoft.tech</a>
+                                </li>
                             </ul>
                         </div>
 
                         <div>
-                            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Légal</h2>
+                            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Horaires</h2>
                             <ul class="text-gray-600 dark:text-gray-400">
-                                <li class="mb-4"><Link href="/privacy" class="hover:underline">Politique de confidentialité</Link></li>
-                                <li><Link href="/terms" class="hover:underline">Conditions d’utilisation</Link></li>
+                                <li class="mb-4">Lundi - Vendredi : 08h00 - 18h00</li>
                             </ul>
                         </div>
                     </div>

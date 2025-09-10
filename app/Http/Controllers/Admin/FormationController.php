@@ -52,6 +52,10 @@ class FormationController extends Controller
             'description' => 'required|string',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
+            'price' => 'nullable|numeric|min:0',
+            'quota' => 'nullable|integer|min:1',
+            'location' => 'nullable|string|max:255',
+            'duration' => 'nullable|integer|min:1',
             'user_id' => 'required|exists:users,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
             'logo_formation' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
@@ -62,6 +66,10 @@ class FormationController extends Controller
         $formation->description = $request->description;
         $formation->start_date = $request->start_date;
         $formation->end_date = $request->end_date;
+        $formation->price = $request->price;
+        $formation->quota = $request->quota;
+        $formation->location = $request->location;
+        $formation->duration = $request->duration;
         $formation->user_id = $request->user_id;
 
         // Gestion de l'image principale
@@ -116,6 +124,10 @@ class FormationController extends Controller
             'description' => 'required|string',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
+            'price' => 'nullable|numeric|min:0',
+            'quota' => 'nullable|integer|min:1',
+            'location' => 'nullable|string|max:255',
+            'duration' => 'nullable|integer|min:1',
             'user_id' => 'required|exists:users,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
             'logo_formation' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
@@ -130,6 +142,10 @@ class FormationController extends Controller
             'description' => $validated['description'],
             'start_date' => $validated['start_date'],
             'end_date' => $validated['end_date'],
+            'price' => $validated['price'],
+            'quota' => $validated['quota'],
+            'location' => $validated['location'],
+            'duration' => $validated['duration'],
             'user_id' => $validated['user_id'],
         ]);
 
