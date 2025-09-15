@@ -47,7 +47,7 @@ function submitForm() {
         onSuccess: () => {
              Swal.fire({
                 title: 'Succès',
-                text: 'Etudiant ajouté avec succès.',
+                text: 'Candidat ajouté(e) avec succès.',
                 icon: 'success',
                 confirmButtonText: 'OK',
             });

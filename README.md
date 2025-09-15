@@ -4,7 +4,7 @@
 # 📘 Forma Plus
 
 **Forma Plus** est une plateforme numérique de gestion de formations et de suivi, développée avec **Laravel**, **Inertia.js** et **Vue 3**.
-Le projet propose un tableau de bord moderne, inspiré d’une **interface POS (point de vente)**, avec une navigation intuitive et un design cohérent basé sur le logo officiel de Forma Plus.
+Le projet propose un tableau de bord moderne avec une navigation intuitive et un design cohérent basé sur le logo officiel de Forma Plus.
 
 ---
 
@@ -12,41 +12,25 @@ Le projet propose un tableau de bord moderne, inspiré d’une **interface POS (
 
 * 🔑 **Authentification & Profil utilisateur**
 
-  * Inscription, connexion, gestion du profil.
-  * Attribution de rôles et permissions (Admin, Formateur, Étudiant…).
+  * Connexion, gestion du profil.
+  * Attribution de rôles et permissions (Admin, Formateur, etc…).
 
 * 📚 **Gestion des formations**
 
   * CRUD complet (création, édition, suppression).
   * Attribution des formateurs aux sessions.
   * Suivi des apprenants.
+  * Définition des lieux et dates de formation.
 
 * 👥 **Gestion des utilisateurs**
 
   * Création et édition des comptes.
   * Attribution dynamique de rôles et permissions.
-  * Accès restreint selon le rôle (admin, chef, caissier, etc.).
+  * Accès restreint selon le rôle (administrateur, formateur, apprenant…).
 
-* 💳 **Ventes & Paiements**
+* 📊 **Tableau de bord **
 
-  * Interface **POS-like** pour enregistrer rapidement les ventes.
-  * Prise en charge des **modes de paiement**.
-  * Limitation des ventes selon la capacité disponible.
-
-* 🎫 **Billetterie & QR Code**
-
-  * Génération automatique de billets de train/formation avec **QR Code**.
-  * Attribution de places (prise en compte des wagons/chaises).
-
-* 📦 **Gestion des colis & bagages**
-
-  * Catégorisation des colis.
-  * Définition des prix au kilo (configurable dans les paramètres).
-
-* 📊 **Tableau de bord & Rapports**
-
-  * Vue d’ensemble des ventes et formations.
-  * Export des ventes en **CSV/XLS** par mois.
+  * Vue d’ensemble des formations en cours et à venir.
 
 * 🖌️ **UI & Design**
 
@@ -61,9 +45,8 @@ Le projet propose un tableau de bord moderne, inspiré d’une **interface POS (
 * **Backend :** [Laravel 11+](https://laravel.com)
 * **Frontend :** [Vue 3](https://vuejs.org) + [Inertia.js](https://inertiajs.com)
 * **UI :** [TailwindCSS](https://tailwindcss.com) + [shadcn-vue](https://shadcn-vue.com)
-* **Base de données :** PostgreSQL
+* **Base de données :** MySQL
 * **Gestion des rôles/permissions :** [spatie/laravel-permission](https://spatie.be/docs/laravel-permission)
-* **QR Codes :** [Simple QrCode](https://github.com/SimpleSoftwareIO/simple-qrcode)
 
 ---
 
@@ -91,7 +74,7 @@ forma-plus/
 ### 1. Cloner le projet
 
 ```bash
-git clone https://github.com/votre-repo/forma-plus.git
+git clone https://github.com/hforlife/Gestion_Formation.git
 cd forma-plus
 ```
 
@@ -110,12 +93,12 @@ Copier `.env.example` vers `.env` et ajuster :
 APP_NAME=FormaPlus
 APP_URL=http://localhost:8000
 
-DB_CONNECTION=pgsql
+DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
-DB_PORT=5432
-DB_DATABASE=forma_plus
-DB_USERNAME=postgres
-DB_PASSWORD=secret
+DB_PORT=3306
+DB_DATABASE=formaplus
+DB_USERNAME=root
+DB_PASSWORD=password
 ```
 
 ### 4. Générer la clé de l’application
@@ -157,10 +140,10 @@ php artisan serve
 
 * [x] Authentification & rôles
 * [x] Gestion des formations
-* [x] POS-like UI pour ventes
-* [x] Génération de billets avec QR Code
+* [x] UI moderne pour inscriptions/paiements
 * [ ] Notifications temps réel (WebSockets)
 * [ ] Module de présence numérique (lié au projet Figma)
+* [ ] Attestations de participation avec QR Code
 
 ---
 

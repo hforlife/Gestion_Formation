@@ -177,7 +177,7 @@ function goToPage(url: string | null) {
                             </TableRow>
                         </template>
                         <TableRow v-else>
-                            <TableCell :colspan="columns.length" class="h-24 text-center">Aucun étudiant validé.</TableCell>
+                            <TableCell :colspan="columns.length" class="h-24 text-center">Aucun candidat validé.</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

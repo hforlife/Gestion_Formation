@@ -58,10 +58,10 @@ class SiteController extends Controller
             // règles de validation
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
-            'email' => 'required|email',
-            'telephone' => 'required|string|max:255',
-            'adresse' => 'required|string|max:255',
-            'profession' => 'required|string|max:255',
+            'email' => 'nullable|email',
+            'telephone' => 'nullable|string|max:255',
+            'adresse' => 'nullable|string|max:255',
+            'profession' => 'nullable|string|max:255',
         ]);
 
         $user = new Etudiant();

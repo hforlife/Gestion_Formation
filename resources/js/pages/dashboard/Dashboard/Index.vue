@@ -7,11 +7,11 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { 
-  Users, 
-  UserCheck, 
-  BookOpen, 
-  TrendingUp, 
+import {
+  Users,
+  UserCheck,
+  BookOpen,
+  TrendingUp,
   Clock,
   ArrowRight,
   UserPlus,
@@ -93,7 +93,7 @@ const chartData = computed(() => props.evolutionMensuelle);
                     <Link :href="etudiantsIndex().url">
                         <Button variant="outline" size="sm" class="gap-2">
                             <Users class="w-4 h-4" />
-                            Voir tous les étudiants
+                            Voir tous les candidat(e)s
                         </Button>
                     </Link>
                 </div>
@@ -105,7 +105,7 @@ const chartData = computed(() => props.evolutionMensuelle);
                 <div class="rounded-xl border  p-6 shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium ">Total Étudiants</p>
+                            <p class="text-sm font-medium ">Total candidat(e)s</p>
                             <p class="mt-2 text-3xl font-bold ">{{ props.stats.totalEtudiants }}</p>
                         </div>
                         <div class="p-3 bg-blue-100 rounded-full">
@@ -118,11 +118,11 @@ const chartData = computed(() => props.evolutionMensuelle);
                     </div>
                 </div>
 
-                <!-- Étudiants Validés -->
+                <!-- Candidat(e)s Validés -->
                 <div class="rounded-xl border  p-6 shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium ">Étudiants Validés</p>
+                            <p class="text-sm font-medium ">Candidat(e)s Validés</p>
                             <p class="mt-2 text-3xl font-bold text-green-600">{{ props.stats.etudiantsValides }}</p>
                         </div>
                         <div class="p-3 bg-green-100 rounded-full">
@@ -172,7 +172,7 @@ const chartData = computed(() => props.evolutionMensuelle);
 
             <!-- Grille principale -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Derniers étudiants -->
+                <!-- Derniers candidat(e)s -->
                 <div class="rounded-xl border p-6 shadow-sm">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-lg font-semibold ">Dernières inscriptions</h3>
@@ -187,7 +187,7 @@ const chartData = computed(() => props.evolutionMensuelle);
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>Étudiant</TableHead>
+                                    <TableHead>Candidat</TableHead>
                                     <TableHead>Formation</TableHead>
                                     <TableHead>Date</TableHead>
                                     <TableHead>Status</TableHead>
@@ -213,7 +213,7 @@ const chartData = computed(() => props.evolutionMensuelle);
                                 <TableRow v-if="props.recentEtudiants.length === 0">
                                     <TableCell :colspan="4" class="text-center py-8 text-gray-500">
                                         <UserPlus class="w-12 h-12 mx-auto mb-2 text-gray-300" />
-                                        <p>Aucun étudiant récemment inscrit</p>
+                                        <p>Aucun candidat(e)s récemment inscrit</p>
                                     </TableCell>
                                 </TableRow>
                             </TableBody>
@@ -234,8 +234,8 @@ const chartData = computed(() => props.evolutionMensuelle);
                                 <div class="text-right">
                                     <span class="text-sm ">{{ item.inscriptions }} inscriptions</span>
                                     <div class="w-32 h-2 bg-gray-200 rounded-full mt-1">
-                                        <div 
-                                            class="h-2 bg-blue-500 rounded-full" 
+                                        <div
+                                            class="h-2 bg-blue-500 rounded-full"
                                             :style="{ width: Math.min((item.inscriptions / Math.max(...chartData.map(i => i.inscriptions))) * 100, 100) + '%' }"
                                         ></div>
                                     </div>
@@ -243,8 +243,8 @@ const chartData = computed(() => props.evolutionMensuelle);
                                 <div class="text-right">
                                     <span class="text-sm text-green-600">{{ item.validations }} validations</span>
                                     <div class="w-32 h-2 bg-gray-200 rounded-full mt-1">
-                                        <div 
-                                            class="h-2 bg-green-500 rounded-full" 
+                                        <div
+                                            class="h-2 bg-green-500 rounded-full"
                                             :style="{ width: Math.min((item.validations / Math.max(...chartData.map(i => i.validations))) * 100, 100) + '%' }"
                                         ></div>
                                     </div>
@@ -266,7 +266,7 @@ const chartData = computed(() => props.evolutionMensuelle);
                     <Link :href="etudiantsIndex().url">
                         <Button variant="outline" class="w-full h-16 flex-col gap-2">
                             <Users class="w-6 h-6" />
-                            <span>Gérer les étudiants</span>
+                            <span>Gérer les candidats</span>
                         </Button>
                     </Link>
                     <Link :href="formationsIndex().url">
@@ -278,7 +278,7 @@ const chartData = computed(() => props.evolutionMensuelle);
                     <Link :href="etudiantsCreate().url">
                         <Button variant="outline" class="w-full h-16 flex-col gap-2">
                             <UserPlus class="w-6 h-6" />
-                            <span>Nouvel étudiant</span>
+                            <span>Nouveau candidat</span>
                         </Button>
                     </Link>
                     <Link :href="formationsCreate().url">

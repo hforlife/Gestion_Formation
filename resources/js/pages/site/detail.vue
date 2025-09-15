@@ -334,17 +334,6 @@ const submitInscription = () => {
                         <div class="mb-4 grid gap-4">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label for="nom" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Nom *</label>
-                                    <input
-                                        type="text"
-                                        id="nom"
-                                        v-model="formData.nom"
-                                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                                        placeholder="Votre nom"
-                                        required
-                                    />
-                                </div>
-                                <div>
                                     <label for="prenom" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Prénom *</label>
                                     <input
                                         type="text"
@@ -355,10 +344,21 @@ const submitInscription = () => {
                                         required
                                     />
                                 </div>
+                                <div>
+                                    <label for="nom" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Nom *</label>
+                                    <input
+                                        type="text"
+                                        id="nom"
+                                        v-model="formData.nom"
+                                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                                        placeholder="Votre nom"
+                                        required
+                                    />
+                                </div>
                             </div>
 
                             <div>
-                                <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Email *</label>
+                                <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Email</label>
                                 <input
                                     type="email"
                                     id="email"

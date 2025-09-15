@@ -253,9 +253,9 @@ function goToPage(url: string | null) {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
             <div class="flex items-center justify-between">
-                <h1 class="text-2xl font-bold">Gestion des Etudiants</h1>
+                <h1 class="text-2xl font-bold">Gestion des Candidats</h1>
                 <Link :href="create().url">
-                    <Button variant="default"> Nouvel Etudiant </Button>
+                    <Button variant="default"> Nouveau candidat </Button>
                 </Link>
             </div>
             <div class="flex items-center gap-2 py-4">
@@ -341,7 +341,7 @@ function goToPage(url: string | null) {
 
             <!-- Info de pagination -->
             <div class="text-center text-sm text-muted-foreground">
-                Affichage des étudiants {{ props.etudiants.data.length ? props.etudiants.data.length : 0 }} sur {{ props.etudiants.total }} total
+                Affichage des candidats {{ props.etudiants.data.length ? props.etudiants.data.length : 0 }} sur {{ props.etudiants.total }} total
                 (Page {{ props.etudiants.current_page }} sur {{ props.etudiants.last_page }})
             </div>
         </div>
