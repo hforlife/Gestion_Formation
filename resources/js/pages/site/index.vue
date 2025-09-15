@@ -157,69 +157,76 @@ const truncate = (text: string, length: number) => {
 
             <!-- SECTION Dernières Formations -->
             <section class="bg-gray-50 py-8 antialiased md:py-12 dark:bg-gray-900">
-                <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-                    <!-- Heading -->
-                    <div class="mb-8 text-center">
-                        <h2 class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">Nos dernières formations</h2>
-                        <p class="mt-2 text-gray-500 dark:text-gray-400">Découvrez les 6 dernières formations ajoutées sur Forma Plus.</p>
-                    </div>
+  <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    <!-- Heading -->
+    <div class="mb-8 text-center">
+      <h2 class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
+        Nos dernières formations
+      </h2>
+      <p class="mt-2 text-gray-500 dark:text-gray-400">
+        Découvrez les 6 dernières formations ajoutées sur Forma Plus.
+      </p>
+    </div>
 
-                    <!-- Grid formations -->
-                    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <div
-                            v-for="formation in props.formations"
-                            :key="formation.id"
-                            class="rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
-                        >
-                            <!-- Image -->
-                            <div class="h-48 w-full overflow-hidden rounded-t-lg">
-                                <img
-                                    :src="formation.logo_formation ? `/storage/${formation.logo_formation}` : '/images/default.png'"
-                                    :alt="formation.title"
-                                    class="h-full w-full object-cover"
-                                />
-                            </div>
+    <!-- Grid formations -->
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        v-for="formation in props.formations"
+        :key="formation.id"
+        class="rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
+      >
+        <!-- Image -->
+        <div class="h-48 w-full overflow-hidden rounded-t-lg">
+          <img
+            :src="formation.logo_formation ? `/storage/${formation.logo_formation}` : '/images/default.png'"
+            :alt="formation.title"
+            class="h-full w-full object-cover"
+          />
+        </div>
 
-                            <!-- Infos -->
-                            <div class="p-5">
-                                <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-                                    {{ formation.title }}
-                                </h3>
+        <!-- Infos -->
+        <div class="p-5">
+          <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+            {{ formation.title }}
+          </h3>
 
-                                <!-- Description raccourcie -->
-                                <p class="mb-4 text-sm text-gray-700 dark:text-gray-400">
-                                    {{ truncate(formation.description, 120) }}
-                                </p>
+          <!-- Description raccourcie -->
+          <p class="mb-4 text-sm text-gray-700 dark:text-gray-400">
+            {{ truncate(formation.description, 120) }}
+          </p>
 
-                                <!-- Prix -->
-                                <p class="mb-4 text-xl font-bold text-primary-600">{{ formation.price }} FCFA</p>
+          <!-- Prix -->
+          <p class="mb-4 text-xl font-bold text-primary-600">{{ formation.price }} FCFA</p>
 
-                                <!-- Ligne date + bouton -->
-                                <div class="flex items-center justify-between">
-                                    <p class="text-sm text-primary-600 dark:text-gray-400">
-                                        {{ formatDate(formation.start_date) }}
-                                    </p>
+          <!-- Ligne date + bouton -->
+          <div class="flex items-center justify-between">
+            <p class="text-sm text-primary-600 dark:text-gray-400">
+              {{ formatDate(formation.start_date) }}
+            </p>
 
-                                    <Link
-                                        :href="detail.url({ id: formation.id })"
-                                        class="inline-flex items-center justify-center rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 focus:outline-none dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                                    >
-                                        Voir les détails
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="w-full text-center items-center">
-                            <button
-                                type="button"
-                                class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-                            >
-                                Voir Plus
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <Link
+              :href="detail.url({ id: formation.id })"
+              class="inline-flex items-center justify-center rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 focus:outline-none dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            >
+              Voir les détails
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bouton Voir Plus centré -->
+    <div class="mt-8 flex justify-center">
+      <Link
+        :href="course.url()"
+        class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+      >
+        Voir Plus
+      </Link>
+    </div>
+  </div>
+</section>
+
 
             <!-- 📩 CTA -->
             <section class="bg-white dark:bg-gray-900">

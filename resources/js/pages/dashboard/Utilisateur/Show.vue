@@ -41,8 +41,8 @@ const breadcrumbs: BreadcrumbItem[] = [
             <!-- En-tête -->
             <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 md:text-3xl">{{ props.users.name }}</h1>
-                    <p class="mt-1 text-sm text-gray-600">ID: {{ props.users.id }}</p>
+                    <h1 class="text-2xl font-bold md:text-3xl">{{ props.users.name }}</h1>
+                    <p class="mt-1 text-sm">ID: {{ props.users.id }}</p>
                 </div>
 
                 <div class="flex flex-wrap gap-2">
@@ -62,23 +62,23 @@ const breadcrumbs: BreadcrumbItem[] = [
             <!-- Contenu principal -->
             <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <!-- Colonne gauche - Description -->
-                <div class="rounded-lg border border-gray-200 bg-white p-6">
-                   <h2 class="mb-4 text-lg font-semibold text-gray-900">Informations</h2>
+                <div class="rounded-lg border p-6">
+                   <h2 class="mb-4 text-lg font-semibold">Informations</h2>
 
                     <div class="space-y-4">
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-600">Nom :</label>
-                            <p class="font-medium text-gray-900">{{ props.users.name || 'Non assigné' }}</p>
+                            <label class="mb-1 block text-sm font-medium">Nom :</label>
+                            <p class="font-medium">{{ props.users.name || 'Non assigné' }}</p>
                         </div>
 
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-600">Nom D'utilisateur :</label>
-                            <p class="font-medium text-gray-900">{{ props.users.username || 'Non assigné' }}</p>
+                            <label class="mb-1 block text-sm font-medium">Nom D'utilisateur :</label>
+                            <p class="font-medium">{{ props.users.username || 'Non assigné' }}</p>
                         </div>
 
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-600">Adresse Email :</label>
-                            <p class="text-gray-900">{{ props.users.email }}</p>
+                            <label class="mb-1 block text-sm font-medium">Adresse Email :</label>
+                            <p class="font-medium">{{ props.users.email }}</p>
                         </div>
                     </div>
                 </div>

@@ -70,7 +70,7 @@ const getStatusColor = (status: string) => {
         case 'Validé': return 'text-green-600 bg-green-100';
         case 'En Cours': return 'text-yellow-600 bg-yellow-100';
         case 'Rejété': return 'text-red-600 bg-red-100';
-        default: return 'text-gray-600 bg-gray-100';
+        default: return ' bg-gray-100';
     }
 };
 
@@ -86,8 +86,8 @@ const chartData = computed(() => props.evolutionMensuelle);
             <!-- En-tête -->
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Tableau de bord</h1>
-                    <p class="text-sm text-gray-600 mt-1">Vue d'ensemble de votre centre de formation</p>
+                    <h1 class="text-2xl font-bold">Tableau de bord</h1>
+                    <p class="text-sm mt-1">Vue d'ensemble de votre centre de formation</p>
                 </div>
                 <div class="flex gap-2">
                     <Link :href="etudiantsIndex().url">
@@ -102,69 +102,69 @@ const chartData = computed(() => props.evolutionMensuelle);
             <!-- Statistiques principales -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Total Étudiants -->
-                <div class="rounded-xl border bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div class="rounded-xl border  p-6 shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-600">Total Étudiants</p>
-                            <p class="mt-2 text-3xl font-bold text-gray-900">{{ props.stats.totalEtudiants }}</p>
+                            <p class="text-sm font-medium ">Total Étudiants</p>
+                            <p class="mt-2 text-3xl font-bold ">{{ props.stats.totalEtudiants }}</p>
                         </div>
                         <div class="p-3 bg-blue-100 rounded-full">
                             <Users class="w-6 h-6 text-blue-600" />
                         </div>
                     </div>
-                    <div class="mt-4 flex items-center text-sm text-gray-500">
+                    <div class="mt-4 flex items-center text-sm">
                         <TrendingUp class="w-4 h-4 mr-1 text-green-500" />
                         <span>{{ props.stats.tauxValidation }}% de taux de validation</span>
                     </div>
                 </div>
 
                 <!-- Étudiants Validés -->
-                <div class="rounded-xl border bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div class="rounded-xl border  p-6 shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-600">Étudiants Validés</p>
+                            <p class="text-sm font-medium ">Étudiants Validés</p>
                             <p class="mt-2 text-3xl font-bold text-green-600">{{ props.stats.etudiantsValides }}</p>
                         </div>
                         <div class="p-3 bg-green-100 rounded-full">
                             <UserCheck class="w-6 h-6 text-green-600" />
                         </div>
                     </div>
-                    <div class="mt-4 text-sm text-gray-500">
+                    <div class="mt-4 text-sm  ">
                         {{ Math.round((props.stats.etudiantsValides / props.stats.totalEtudiants) * 100) }}% du total
                     </div>
                 </div>
 
                 <!-- Formations -->
-                <div class="rounded-xl border bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div class="rounded-xl border  p-6 shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-600">Total Formations</p>
-                            <p class="mt-2 text-3xl font-bold text-blue-600">{{ props.stats.totalFormations }}</p>
+                            <p class="text-sm font-medium ">Total Formations</p>
+                            <p class="mt-2 text-3xl font-bold">{{ props.stats.totalFormations }}</p>
                         </div>
                         <div class="p-3 bg-purple-100 rounded-full">
                             <BookOpen class="w-6 h-6 text-purple-600" />
                         </div>
                     </div>
                     <Link :href="formationsIndex().url">
-                        <div class="mt-4 flex items-center text-sm text-blue-600 hover:text-blue-700 cursor-pointer">
-                            <Book class="w-4 h-4 mr-1" />
+                        <div class="mt-4 flex items-center text-sm   hover:text-blue-700 cursor-pointer">
+                            <Book class="w-4 h-4 mr-1 text-blue-700" />
                             Voir les formations
                         </div>
                     </Link>
                 </div>
 
                 <!-- En Cours -->
-                <div class="rounded-xl border bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div class="rounded-xl border  p-6 shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-600">En Cours</p>
-                            <p class="mt-2 text-3xl font-bold text-yellow-600">{{ props.stats.etudiantsEnCours }}</p>
+                            <p class="text-sm font-medium ">En Cours</p>
+                            <p class="mt-2 text-3xl font-bold">{{ props.stats.etudiantsEnCours }}</p>
                         </div>
                         <div class="p-3 bg-yellow-100 rounded-full">
                             <Clock class="w-6 h-6 text-yellow-600" />
                         </div>
                     </div>
-                    <div class="mt-4 text-sm text-gray-500">
+                    <div class="mt-4 text-sm  ">
                         En attente de validation
                     </div>
                 </div>
@@ -173,9 +173,9 @@ const chartData = computed(() => props.evolutionMensuelle);
             <!-- Grille principale -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Derniers étudiants -->
-                <div class="rounded-xl border bg-white p-6 shadow-sm">
+                <div class="rounded-xl border p-6 shadow-sm">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900">Dernières inscriptions</h3>
+                        <h3 class="text-lg font-semibold ">Dernières inscriptions</h3>
                         <Link :href="etudiantsIndex().url">
                             <Button variant="ghost" size="sm" class="gap-2">
                                 Voir tout
@@ -194,12 +194,12 @@ const chartData = computed(() => props.evolutionMensuelle);
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                <TableRow v-for="etudiant in props.recentEtudiants" :key="etudiant.id" class="hover:bg-gray-50">
+                                <TableRow v-for="etudiant in props.recentEtudiants" :key="etudiant.id" >
                                     <TableCell>
                                         <div class="font-medium">{{ etudiant.prenom }} {{ etudiant.nom }}</div>
                                     </TableCell>
                                     <TableCell>
-                                        <span class="text-sm text-gray-600">{{ etudiant.formation?.title || 'N/A' }}</span>
+                                        <span class="text-sm ">{{ etudiant.formation?.title || 'N/A' }}</span>
                                     </TableCell>
                                     <TableCell>
                                         <span class="text-sm text-gray-500">{{ formatDate(etudiant.created_at) }}</span>
@@ -222,17 +222,17 @@ const chartData = computed(() => props.evolutionMensuelle);
                 </div>
 
                 <!-- Évolution mensuelle -->
-                <div class="rounded-xl border bg-white p-6 shadow-sm">
+                <div class="rounded-xl border  p-6 shadow-sm">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900">Évolution mensuelle</h3>
+                        <h3 class="text-lg font-semibold ">Évolution mensuelle</h3>
                         <span class="text-sm text-gray-500">6 derniers mois</span>
                     </div>
                     <div class="space-y-4">
                         <div v-for="item in chartData" :key="item.mois" class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-gray-700">{{ item.mois }}</span>
+                            <span class="text-sm font-medium">{{ item.mois }}</span>
                             <div class="flex items-center gap-4">
                                 <div class="text-right">
-                                    <span class="text-sm text-gray-600">{{ item.inscriptions }} inscriptions</span>
+                                    <span class="text-sm ">{{ item.inscriptions }} inscriptions</span>
                                     <div class="w-32 h-2 bg-gray-200 rounded-full mt-1">
                                         <div 
                                             class="h-2 bg-blue-500 rounded-full" 
@@ -260,8 +260,8 @@ const chartData = computed(() => props.evolutionMensuelle);
             </div>
 
             <!-- Actions rapides -->
-            <div class="rounded-xl border bg-white p-6 shadow-sm">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Actions rapides</h3>
+            <div class="rounded-xl border  p-6 shadow-sm">
+                <h3 class="text-lg font-semibold  mb-4">Actions rapides</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <Link :href="etudiantsIndex().url">
                         <Button variant="outline" class="w-full h-16 flex-col gap-2">

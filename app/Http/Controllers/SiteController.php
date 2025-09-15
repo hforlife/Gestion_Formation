@@ -6,6 +6,7 @@ use App\Models\Formation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMail;
+use App\Models\Etudiant;
 use Inertia\Inertia;
 
 class SiteController extends Controller
@@ -55,8 +56,23 @@ class SiteController extends Controller
         // Validez les données du formulaire si nécessaire
         $validated = $request->validate([
             // règles de validation
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'email' => 'required|email',
+            'telephone' => 'required|string|max:255',
+            'adresse' => 'required|string|max:255',
+            'profession' => 'required|string|max:255',
         ]);
 
+        $user = new Etudiant();
+        $user->nom = $request->nom;
+        $user->prenom = $request->prenom;
+        $user->email = $request->email;
+        $user->telephone = $request->telephone;
+        $user->adresse = $request->adresse;
+        $user->profession = $request->profession;
+        $user->formation_id = $formation->id;
+        $user->save();
         // Logique d'inscription ici
         // Exemple: auth()->user()->formations()->attach($formation->id);
 

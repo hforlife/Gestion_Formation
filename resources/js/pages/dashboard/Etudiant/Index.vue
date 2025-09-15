@@ -138,7 +138,7 @@ const columns: ColumnDef<Etudiant>[] = [
             return h(
                 'select',
                 {
-                    class: 'border rounded p-1 text-sm',
+                    class: 'border rounded p-1 text-sm bg-transparent text-black dark:text-white ',
                     value: etudiant.status,
                     onChange: (e: Event) => {
                         const newStatus = (e.target as HTMLSelectElement).value;

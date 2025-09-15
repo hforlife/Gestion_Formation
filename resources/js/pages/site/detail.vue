@@ -92,7 +92,7 @@ const submitInscription = () => {
         },
         onError: (errors) => {
             alert("Erreur lors de l'inscription: " + (errors.message || 'Veuillez réessayer.'));
-        }
+        },
     });
 };
 </script>
@@ -106,24 +106,42 @@ const submitInscription = () => {
                 <nav class="mb-8 flex" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-3">
                         <li class="inline-flex items-center">
-                            <Link :href="home.url()" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white">
+                            <Link
+                                :href="home.url()"
+                                class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white"
+                            >
                                 Accueil
                             </Link>
                         </li>
                         <li>
                             <div class="flex items-center">
-                                <svg class="mx-1 h-3 w-3 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                <svg
+                                    class="mx-1 h-3 w-3 text-gray-400"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 6 10"
+                                >
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
                                 </svg>
-                                <Link :href="course.url()" class="ml-1 text-sm font-medium text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">
+                                <Link
+                                    :href="course.url()"
+                                    class="ml-1 text-sm font-medium text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-400 dark:hover:text-white"
+                                >
                                     Formations
                                 </Link>
                             </div>
                         </li>
                         <li aria-current="page">
                             <div class="flex items-center">
-                                <svg class="mx-1 h-3 w-3 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                <svg
+                                    class="mx-1 h-3 w-3 text-gray-400"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 6 10"
+                                >
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
                                 </svg>
                                 <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">{{ formation.title }}</span>
                             </div>
@@ -146,7 +164,7 @@ const submitInscription = () => {
                         <!-- Titre et informations principales -->
                         <div class="mb-6">
                             <h1 class="mb-4 text-3xl font-bold text-gray-900 dark:text-white">{{ formation.title }}</h1>
-                            
+
                             <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
                                 <div class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                                     <p class="text-sm text-gray-500 dark:text-gray-400">Prix</p>
@@ -194,8 +212,19 @@ const submitInscription = () => {
                         <div class="mb-8">
                             <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">Lieu de formation</h2>
                             <div class="rounded-lg bg-gray-50 p-6 dark:bg-gray-800">
-                                <p class="text-gray-700 dark:text-gray-300">{{ formation.location }}</p>
-                                <!-- Vous pourriez ajouter une carte ici -->
+                                <p class="mb-4 text-gray-700 dark:text-gray-300">{{ formation.location }}</p>
+
+                                <!-- Carte Google Maps responsive -->
+                                <div class="relative h-64 w-full overflow-hidden rounded-lg sm:h-96">
+                                    <iframe
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d973.184159614246!2d-7.935945730314983!3d12.665265207699004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xe51d310e18e61c3%3A0x335eadffa8089d2c!2sDOUCSOFT%20Technologies%20Sarl!5e0!3m2!1sfr!2sml!4v1757936084500!5m2!1sfr!2sml"
+                                        class="absolute inset-0 h-full w-full border-0"
+                                        allowfullscreen=""
+                                        loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade"
+                                    >
+                                    </iframe>
+                                </div>
                             </div>
                         </div>
 
@@ -223,9 +252,7 @@ const submitInscription = () => {
                                 >
                                     S'inscrire maintenant
                                 </button>
-                                <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
-                                    {{ formation.quota }} places disponibles
-                                </p>
+                                <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">{{ formation.quota }} places disponibles</p>
                             </div>
                         </div>
 
@@ -247,9 +274,7 @@ const submitInscription = () => {
                                         <h4 class="truncate text-sm font-medium text-gray-900 dark:text-white">
                                             {{ otherFormation.title }}
                                         </h4>
-                                        <p class="text-sm font-bold text-primary-600">
-                                            {{ formatPrice(otherFormation.price) }} FCFA
-                                        </p>
+                                        <p class="text-sm font-bold text-primary-600">{{ formatPrice(otherFormation.price) }} FCFA</p>
                                     </div>
                                     <Link
                                         :href="`/detail/${otherFormation.id}`"
@@ -265,7 +290,11 @@ const submitInscription = () => {
                             >
                                 Voir toutes les formations
                                 <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    ></path>
                                 </svg>
                             </Link>
                         </div>
@@ -275,27 +304,31 @@ const submitInscription = () => {
         </section>
 
         <!-- Modal d'inscription -->
-        <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-black bg-opacity-50">
+        <div v-if="showModal" class="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-black">
             <div class="relative w-full max-w-md p-4">
                 <!-- Modal content -->
                 <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
                     <!-- Modal header -->
-                    <div class="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                            Pré-inscription à la formation
-                        </h3>
+                    <div class="flex items-center justify-between rounded-t border-b p-4 md:p-5 dark:border-gray-600">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Pré-inscription à la formation</h3>
                         <button
                             @click="closeModal"
                             type="button"
                             class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                             <svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                <path
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                />
                             </svg>
                             <span class="sr-only">Fermer</span>
                         </button>
                     </div>
-                    
+
                     <!-- Modal body -->
                     <form @submit.prevent="submitInscription" class="p-4 md:p-5">
                         <div class="mb-4 grid gap-4">
@@ -323,7 +356,7 @@ const submitInscription = () => {
                                     />
                                 </div>
                             </div>
-                            
+
                             <div>
                                 <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Email *</label>
                                 <input
@@ -335,7 +368,7 @@ const submitInscription = () => {
                                     required
                                 />
                             </div>
-                            
+
                             <div>
                                 <label for="telephone" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Téléphone *</label>
                                 <input
@@ -347,7 +380,7 @@ const submitInscription = () => {
                                     required
                                 />
                             </div>
-                            
+
                             <div>
                                 <label for="adresse" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Adresse</label>
                                 <textarea
@@ -358,7 +391,7 @@ const submitInscription = () => {
                                     placeholder="Votre adresse complète"
                                 ></textarea>
                             </div>
-                            
+
                             <div>
                                 <label for="profession" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Profession</label>
                                 <input
@@ -370,17 +403,21 @@ const submitInscription = () => {
                                 />
                             </div>
                         </div>
-                        
+
                         <button
                             type="submit"
-                            class="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                            class="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 focus:outline-none dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                         >
-                            <svg class="me-1 -ms-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+                            <svg class="-ms-1 me-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                    clip-rule="evenodd"
+                                ></path>
                             </svg>
                             Soumettre ma pré-inscription
                         </button>
-                        
+
                         <p class="mt-3 text-xs text-gray-500 dark:text-gray-400">
                             * Champs obligatoires. Vous recevrez un email de confirmation pour finaliser votre inscription physique.
                         </p>

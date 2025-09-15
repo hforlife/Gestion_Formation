@@ -47,8 +47,8 @@ const formatDate = (dateString: string) => {
             <!-- En-tête -->
             <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 md:text-3xl">{{ props.etudiant.nom }} {{ props.etudiant.prenom }}</h1>
-                    <p class="mt-1 text-sm text-gray-600">ID: {{ props.etudiant.id }}</p>
+                    <h1 class="text-2xl font-bold md:text-3xl">{{ props.etudiant.nom }} {{ props.etudiant.prenom }}</h1>
+                    <p class="mt-1 text-sm ">ID: {{ props.etudiant.id }}</p>
                 </div>
 
                 <div class="flex flex-wrap gap-2">
@@ -68,35 +68,35 @@ const formatDate = (dateString: string) => {
             <!-- Contenu principal -->
             <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <!-- Colonne gauche - Description -->
-                <div class="rounded-lg border border-gray-200 bg-white p-6">
-                    <h2 class="mb-4 text-lg font-semibold text-gray-900">Informations Etudiant</h2>
+                <div class="rounded-lg border  p-6">
+                    <h2 class="mb-4 text-lg font-semibold ">Informations Etudiant</h2>
                     <div class="prose max-w-none">
-                        <p class="leading-relaxed whitespace-pre-line text-gray-700"><strong>Email :</strong> {{ props.etudiant.email }}</p>
-                        <p class="leading-relaxed whitespace-pre-line text-gray-700"><strong>Téléphone :</strong> {{ props.etudiant.telephone }}</p>
-                        <p class="leading-relaxed whitespace-pre-line text-gray-700"><strong>Adresse :</strong> {{ props.etudiant.adresse }}</p>
-                        <p class="leading-relaxed whitespace-pre-line text-gray-700"><strong>Profession :</strong> {{ props.etudiant.profession }}</p>
+                        <p class="leading-relaxed whitespace-pre-line"><strong>Email :</strong> {{ props.etudiant.email }}</p>
+                        <p class="leading-relaxed whitespace-pre-line"><strong>Téléphone :</strong> {{ props.etudiant.telephone }}</p>
+                        <p class="leading-relaxed whitespace-pre-line"><strong>Adresse :</strong> {{ props.etudiant.adresse }}</p>
+                        <p class="leading-relaxed whitespace-pre-line"><strong>Profession :</strong> {{ props.etudiant.profession }}</p>
                     </div>
                 </div>
 
                 <!-- Colonne droite - Informations -->
-                <div class="rounded-lg border border-gray-200 bg-white p-6">
-                    <h2 class="mb-4 text-lg font-semibold text-gray-900">Autres Informations</h2>
+                <div class="rounded-lg border p-6">
+                    <h2 class="mb-4 text-lg font-semibold">Autres Informations</h2>
 
                     <div class="space-y-4">
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-600">Date d'inscription :</label>
-                            <p class="font-medium text-gray-900">{{ formatDate(props.etudiant.inscription_date) || 'Non assigné' }}</p>
+                            <label class="mb-1 block text-sm font-medium">Date d'inscription :</label>
+                            <p class="font-medium">{{ formatDate(props.etudiant.inscription_date) || 'Non assigné' }}</p>
                         </div>
 
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-600">Statut :</label>
-                            <p class="text-gray-900">{{ props.etudiant.status }}</p>
+                            <label class="mb-1 block text-sm font-medium">Statut :</label>
+                            <p class="font-medium">{{ props.etudiant.status }}</p>
                         </div>
 
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-600">Formation :</label>
-                            <p class="text-gray-900" v-if="props.etudiant.formation">{{ props.etudiant.formation.title }}</p>
-                            <p v-else class="text-gray-900">Aucune formation associée</p>
+                            <label class="mb-1 block text-sm font-medium">Formation :</label>
+                            <p class="font-medium" v-if="props.etudiant.formation">{{ props.etudiant.formation.title }}</p>
+                            <p v-else class="font-medium">Aucune formation associée</p>
                         </div>
                     </div>
                 </div>

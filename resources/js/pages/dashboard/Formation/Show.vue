@@ -42,8 +42,8 @@ const formatDate = (dateString: string) => {
             <!-- En-tête -->
             <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 md:text-3xl">{{ formation.title }}</h1>
-                    <p class="mt-1 text-sm text-gray-600">ID: {{ formation.id }}</p>
+                    <h1 class="text-2xl font-bold md:text-3xl">{{ formation.title }}</h1>
+                    <p class="mt-1 text-sm">ID: {{ formation.id }}</p>
                 </div>
 
                 <div class="flex flex-wrap gap-2">
@@ -63,43 +63,43 @@ const formatDate = (dateString: string) => {
             <!-- Contenu principal -->
             <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <!-- Colonne gauche - Description -->
-                <div class="rounded-lg border border-gray-200 bg-white p-6">
-                    <h2 class="mb-4 text-lg font-semibold text-gray-900">Description de la formation</h2>
+                <div class="rounded-lg border p-6">
+                    <h2 class="mb-4 text-lg font-semibold">Description de la formation</h2>
                     <div class="prose max-w-none">
-                        <p class="leading-relaxed whitespace-pre-line text-gray-700">{{ formation.description }}</p>
+                        <p class="leading-relaxed whitespace-pre-line">{{ formation.description }}</p>
                     </div>
                 </div>
 
                 <!-- Colonne droite - Informations -->
-                <div class="rounded-lg border border-gray-200 bg-white p-6">
-                    <h2 class="mb-4 text-lg font-semibold text-gray-900">Informations</h2>
+                <div class="rounded-lg border p-6">
+                    <h2 class="mb-4 text-lg font-semibold">Informations</h2>
 
                     <div class="space-y-4">
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-600">Formateur</label>
-                            <p class="font-medium text-gray-900">{{ formation.user?.name || 'Non assigné' }}</p>
+                            <label class="mb-1 block text-sm font-medium">Formateur</label>
+                            <p class="font-medium">{{ formation.user?.name || 'Non assigné' }}</p>
                         </div>
 
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-600">Date de début</label>
-                            <p class="text-gray-900">{{ formatDate(formation.start_date) }}</p>
+                            <label class="mb-1 block text-sm font-medium">Date de début</label>
+                            <p class="font-medium">{{ formatDate(formation.start_date) }}</p>
                         </div>
 
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-600">Date de fin</label>
-                            <p class="text-gray-900">{{ formatDate(formation.end_date) }}</p>
+                            <label class="mb-1 block text-sm font-medium">Date de fin</label>
+                            <p class="font-medium">{{ formatDate(formation.end_date) }}</p>
                         </div>
 
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-600">ID Formateur</label>
-                            <p class="text-gray-900">{{ formation.user_id }}</p>
+                            <label class="mb-1 block text-sm font-medium">ID Formateur</label>
+                            <p class="font-medium">{{ formation.user_id }}</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Image - Pleine largeur -->
-                <div class="col-span-1 rounded-lg border border-gray-200 bg-white p-6 lg:col-span-2">
-                    <h2 class="mb-4 text-lg font-semibold text-gray-900">Image de la formation</h2>
+                <div class="col-span-1 rounded-lg border p-6 lg:col-span-2">
+                    <h2 class="mb-4 text-lg font-semibold">Image de la formation</h2>
 
                     <div v-if="formation.image" class="flex justify-center">
                         <img
@@ -111,7 +111,7 @@ const formatDate = (dateString: string) => {
 
                     <div v-else class="py-8 text-center">
                         <div class="mb-2 text-6xl text-gray-400">🖼️</div>
-                        <p class="text-gray-500">Aucune image disponible</p>
+                        <p class="font-semibold">Aucune image disponible</p>
                     </div>
                 </div>
             </div>
